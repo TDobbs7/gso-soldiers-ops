@@ -7,10 +7,12 @@ app.config(['$routeProvider',
         $routeProvider.
             when('/', {
                 templateUrl: '/views/login.html',
+                controller: 'LoginCtrl',
                 require_login: false
             }).
-            when('/', {
-                templateUrl: '/views/register.html',
+            when('/test', {
+                templateUrl: '/views/test/test.html',
+                controller: 'TestCtrl',
                 require_login: false
             }).
             otherwise({
@@ -117,49 +119,85 @@ app.config(['$routeProvider',
 //     med_staff: 'med_staff'
 // });
 
-// app.factory('UserService', ['$http', '$rootScope',
-//     function($http, $rootScope) {
-//         var service = {};
+app.factory('UserService', ['$http', '$rootScope',
+    function($http, $rootScope) {
+        var service = {};
 
-//         service.GetAllUsers = GetAllUsers;
-//         service.GetByEmail = GetByEmail;
-//         service.AddNewUser = AddNewUser;
-//         service.UpdateUser = UpdateUser;
-//         service.Login = Login;
+        service.GetAllUsers = GetAllUsers;
+        service.GetByEmail = GetByEmail;
+        service.AddNewUser = AddNewUser;
+        service.UpdateUser = UpdateUser;
+        service.Login = Login;
 
-//         return service;
+        return service;
 
-//         function GetAllUsers() {
-//             return $http.get('/users').then(handleSuccess, handleError('Error getting all users'));
-//         }
+        function GetAllUsers() {
+            return $http.get('/users').then(handleSuccess, handleError('Error getting all users'));
+        }
 
-//         function GetByEmail(email) {
-//             return $http.get('/users/email/' + email).then(handleSuccess, handleError('Error getting user by username'));
-//         }
+        function GetByEmail(email) {
+            return $http.get('/users/email/' + email).then(handleSuccess, handleError('Error getting user by username'));
+        }
 
-//         function AddNewUser(user) {
-//             return $http.post('/users', user).then(handleSuccess, handleError('Error creating user'));
-//         }
+        function AddNewUser(user) {
+            return $http.post('/users', user).then(handleSuccess, handleError('Error creating user'));
+        }
 
-//         function Login(credentials) {
-//             return $http.post('/users/login', credentials).then(handleSuccess, handleError('Invalid email and/or password'));
-//         }
+        function Login(credentials) {
+            return $http.post('/users/login', credentials).then(handleSuccess, handleError('Invalid email and/or password'));
+        }
 
-//         function UpdateUser(user) {
-//             return $http.put('/users/' + user.email, user).then(handleSuccess, handleError('Error updating user'));
-//         }
+        function UpdateUser(user) {
+            return $http.put('/users/' + user.email, user).then(handleSuccess, handleError('Error updating user'));
+        }
 
-//         // private functions
+        // private functions
 
-//         function handleSuccess(res) {
-//             return {"data" : res.data};
-//         }
+        function handleSuccess(res) {
+            return {"data" : res.data};
+        }
 
-//         function handleError(error) {
-//             return {"message" : error};
-//         }
-//     }
-// ])
+        function handleError(error) {
+            return {"message" : error};
+        }
+    }
+]);
+
+app.controller('TestCtrl', ['$scope', '$http', 
+    function($scope, $http) {
+        $scope.init = function() {
+            console.log("Hey!")
+            return $http.put('/init/pass')
+                .success(function(res){
+                    console.log("yay!");
+                }).error(function(err) {
+                    console.error(err);
+                    console.log("Ugggghhh!");
+                });
+        }
+    }
+]).
+controller('LoginCtrl', ['$scope', '$http', '$location',
+    function($scope, $http, $location) {
+        $scope.login = function(email, password) {
+            console.log("Attempting log in for " + email);
+            var credentials = {
+                'email' : email,
+                'password' : password
+            };
+
+
+            return $http.post('/users/login', credentials).then(
+                function(res) {
+                    $location.path('/home');
+                }, function(err) {
+                    console.err(err);
+                    return null;
+                } 
+            );
+        }
+    }
+]);
 // .factory('AuthenticationService', ['$rootScope', 'UserService',
 //     function($rootScope, UserService) {
 //         var service = {};
