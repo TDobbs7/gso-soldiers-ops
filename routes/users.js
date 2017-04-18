@@ -57,13 +57,14 @@ router.post('/login', function(req, res, next) {
 
             var abs_coll = db.get('abilities');
 
-            abs_coll.find({'role': user.role.class}, {}, function(err, powers) {
+            abs_coll.findOne({'role': user.role.class}, {}, function(err, powers) {
                 var timestamp = new Date(new Date().getTime()).toLocaleString();
 
                 if (err) return next(err);
                 else if (!powers) res.json({"user" : user, "timestamp" : timestamp});
                 
-                user.abilities = powers;
+                user.abilities = powers.abilities;
+                console.log(user);
                 res.json({"user" : user, "timestamp" : timestamp});
             });
     	}
@@ -85,12 +86,25 @@ router.put('/:email', function(req, res, next) {
     var user_coll = db.get('users');
     var new_user = req.body;
 
-    user_coll.update({"email": req.params.email}, new_user, {'upsert': true}, function(err) {
-        if (err) return next(err);
+    user_coll.findOne({"email": req.params.email}, function(err, user) {
+        if (err) {
+            console.error(err);
+            return next(err);
+        } 
 
-        res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
+        if (!user) res.status(404).json({"message" : "User " + req.params.email + " can't be updated at this time"});
+
+        new_user._id = user._id;
+
+        user_coll.update({"email": req.params.email}, new_user, {'upsert': true}, function(err) {
+            if (err) {
+                console.error(err);
+                return next(err);
+            }
+            res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
+        });
     });
-    
+
     //res.json({"success": true});
     // var aUser = new User(req.body);
 
