@@ -25,16 +25,6 @@ app.config(['$routeProvider',
             });
     }
 ]);
-// app.config(['$routeProvider', 'USER_ROLES',
-//     function($routeProvider, USER_ROLES) {
-//         $routeProvider.
-//             when()
-//             otherwise({
-//                 redirectTo: '/'
-//             });
-//     }
-// ]);
-
 
 app.run(function($location, $rootScope, $route, AuthenticationService, UserService) {
     $rootScope.location = $location;
