@@ -24,6 +24,14 @@
     </head>
 
     <body>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right" >
+                    <li data-ng-if="route.require_login"><a style="color: black; background-color: transparent" role="button" target="_blank" data-ng-click="logout()">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+                </ul>
+
+            </div>
+        </nav>
         <div data-ng-view>
 
         </div>

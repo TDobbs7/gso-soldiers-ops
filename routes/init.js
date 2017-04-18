@@ -28,6 +28,52 @@ router.post('/one', function(req, res, next){
 	});
 });
 
+router.post('/abilities', function(req, res, next) {
+    var db = req.db;
+    var abs_coll = db.collection("abilities");
+
+    var abilities = [
+        {'role': 'Admin',
+        'abilities': [
+            "View All Operations",
+            "Manage Contract Offers",
+            "Manage Game Schedule",
+            "Manage Trade Agreement Details"
+        ]},
+        {'role': 'Player',
+        'abilities': [
+            "View Contract Offer",
+            "View Medical Schedule",
+            "View Game Schedule",
+            "View Training Schedule",
+            "View Playbook"
+        ]},
+        {'role': 'Coach',
+        'abilities': [
+            "View Contract Offer",
+            "Manage Training Schedules",
+            "Manage Playbook",
+            "Create Scouting Report",
+            "Create Team Report",
+            "Request Medical Appointment"
+        ]},
+        {
+        'role': 'Medic',
+        'abilities': [
+            "View Contract Offer",
+            "Manage Medical Appointments/Requests",
+            "View Medical Schedule",
+            "Create Medical Report"
+        ]}
+    ];
+
+    abilities.forEach(function(role) {
+        abs_coll.insert(role, function(err, insert) {
+            if (err) console.error(err);
+        });
+    });
+});
+
 router.post('/', function(req, res, next) {
 	var db = req.db;
 	var user_coll = db.collection("users");

@@ -15,6 +15,11 @@ app.config(['$routeProvider',
                 controller: 'TestCtrl',
                 require_login: false
             }).
+            when('/home', {
+                templateUrl: '/views/home.html',
+                require_login: true,
+                good_roles: ["all"]
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -30,94 +35,61 @@ app.config(['$routeProvider',
 //     }
 // ]);
 
-// app.run(function($location, $rootScope, $route, AuthenticationService, UserService, EmailService) {
-//     $rootScope.location = $location;
-//     $rootScope.route = $route.routes[$location.path()]
-//     $rootScope.currentUserData = JSON.parse(window.localStorage.getItem("user"));
-//     $rootScope.requestedPerson = JSON.parse(window.localStorage.getItem("req_person"));
-//     $rootScope.requestedUser = JSON.parse(window.localStorage.getItem("req_user"));
 
-//     $rootScope.logout = function() {
-//         $rootScope.currentUserData.user.last_login = $rootScope.currentUserData.timestamp;
-//         UserService.UpdateUser($rootScope.currentUserData.user).then(function(res) {
-//             AuthenticationService.clearCurrentUser();
+app.run(function($location, $rootScope, $route, AuthenticationService, UserService) {
+    $rootScope.location = $location;
+    $rootScope.route = $route.routes[$location.path()]
+    $rootScope.currentUserData = JSON.parse(window.localStorage.getItem("user"));
+    $rootScope.requestedPerson = JSON.parse(window.localStorage.getItem("req_person"));
+    $rootScope.requestedUser = JSON.parse(window.localStorage.getItem("req_user"));
 
-//             $location.path('/');
-//             alert("You have logged out");
-//             $route.reload();
-//         }, function(res) {
-//           $rootScope.stopAndReport(res.data);
-//         });
-//     };
+    $rootScope.logout = function() {
+        $rootScope.currentUserData.user.last_login = $rootScope.currentUserData.timestamp;
+        UserService.UpdateUser($rootScope.currentUserData.user).then(function(res) {
+            AuthenticationService.clearCurrentUser();
 
-//     $rootScope.sendEmail = function(sender, recs, email_subject, message) {
-//         var data = {
-//             'email' : {
-//                 from : sender,
-//                 recipients: recs,
-//                 subject: email_subject,
-//                 text: message
-//             }
-//         };
+            $location.path('/');
+            alert("You have logged out");
+            $route.reload();
+        }, function(res) {
+          $rootScope.stopAndReport(res.data);
+        });
+    };
 
-//         EmailService.sendEmail(data).then(
-//             function(res) {
-//                 alert("Your email was sent!");
-//                 $location.path('/');
-//             }, function(res) { failed(res); }
-//         );
-//     }
+    $rootScope.stopAndReport = function(res) {
+        event.preventDefault();
+        alert(res.message);
+    }
 
-//     $rootScope.contactUs = function(contacter) {
-//         var sender = contacter.email_addr;
-//         var recipients = ["contactus.scored@gmail.com"];
-//         var subject = contacter.email_subject;
-//         var text = "You received a message from " + contacter.name + ". Here is the message:\n\n" + contacter.email_message;
+    $rootScope.$on('$locationChangeStart', function(event, next, current) {
+        var next_path = $location.path();
+        var next_route = $route.routes[next_path];
 
-//         $rootScope.sendEmail(sender, recipients, subject, text)
-//     }
+        if (next_path == '/' && AuthenticationService.isAuthenticated()) {
+          event.preventDefault();
+          $location.path('/home');
+        }
 
-//     $rootScope.stopAndReport = function(res) {
-//         event.preventDefault();
-//         alert(res.message);
-//     }
+        if (next_path != '/judge/event_form' && window.localStorage.getItem("current_evt_code") != null) {
+            window.localStorage.removeItem("current_evt_code");
+        }
 
-//     $rootScope.$on('$locationChangeStart', function(event, next, current) {
-//         var next_path = $location.path();
-//         var next_route = $route.routes[next_path];
+        if (next_route && next_route.require_login) {
+          if(!AuthenticationService.isAuthenticated()) {
+            $rootScope.stopAndReport({'message' : "You must be logged in first"});
+            $location.path('/');
+          }
+          else if (!AuthenticationService.isAuthorized(next_route.good_roles)) {
+            $rootScope.stopAndReport({'message' : "You are not authorized to view this page : " + $rootScope.currentUserData.user.role.class + ", " + $rootScope.currentUserData.user.role.position});
 
-//         if (next_path == '/' && AuthenticationService.isAuthenticated()) {
-//           event.preventDefault();
-//           $location.path('/home');
-//         }
+            next_path = '/home';
+            $location.path(next_path);
+          } else $location.path(next_path);
+        }
 
-//         if (next_path != '/judge/event_form' && window.localStorage.getItem("current_evt_code") != null) {
-//             window.localStorage.removeItem("current_evt_code");
-//         }
-
-//         if (next_route && next_route.require_login) {
-//           if(!AuthenticationService.isAuthenticated()) {
-//             $rootScope.stopAndReport({'message' : "You must be logged in first"});
-//             $location.path('/');
-//           }
-//           else if (!AuthenticationService.isAuthorized(next_route.good_roles)) {
-//             $rootScope.stopAndReport({'message' : "You are not authorized to view this page : " + $rootScope.currentUserData.user.user_role});
-
-//             next_path = '/home';
-//             $location.path(next_path);
-//           } else $location.path(next_path);
-//         }
-
-//         $route.reload();
-//     });
-// });
-
-// app.constant('USER_ROLES', {
-//     gm: 'gm',
-//     player: 'player',
-//     coach_staff: 'coach_staff',
-//     med_staff: 'med_staff'
-// });
+        $route.reload();
+    });
+});
 
 app.factory('UserService', ['$http', '$rootScope',
     function($http, $rootScope) {
@@ -161,13 +133,61 @@ app.factory('UserService', ['$http', '$rootScope',
             return {"message" : error};
         }
     }
+]).
+factory('AuthenticationService', ['$rootScope', 'UserService',
+    function($rootScope, UserService) {
+        var service = {};
+
+        service.isAuthenticated = isAuthenticated;
+        service.isAuthorized = isAuthorized;
+        service.setCurrentUser = setCurrentUser;
+        service.clearCurrentUser = clearCurrentUser;
+
+        return service;
+
+        function isAuthenticated() {
+            return ($rootScope.currentUserData !== null);
+        }
+
+        function setCurrentUser(data) {
+            window.localStorage.setItem("user", JSON.stringify(data));
+            $rootScope.currentUserData = data;
+        }
+
+        function clearCurrentUser() {
+            window.localStorage.clear();
+            $rootScope.currentUserData = null;
+            $rootScope.requestedPerson = null;
+            $rootScope.requestedUser = null;
+        }
+
+        function isAuthorized(good_roles) {
+            //return (good_roles.indexOf($rootScope.currentUserData.user.user_role) !== -1);
+
+            if (good_roles[0] === "all") return true;
+
+            for(var index in $rootScope.currentUserData.user.user_role) {
+                if (good_roles.indexOf($rootScope.currentUserData.user.user_role[index]) !== -1) return true;
+            }
+
+            return false;
+        }
+
+        function handleSuccess(res) {
+            return {"data" : res.data};
+        }
+
+        function handleError(error) {
+            return {"message" : error};
+        }
+    }
 ]);
 
 app.controller('TestCtrl', ['$scope', '$http', 
     function($scope, $http) {
         $scope.init = function() {
             console.log("Hey!")
-            return $http.put('/init/pass')
+            return $http.post('/init/abilities')
                 .success(function(res){
                     console.log("yay!");
                 }).error(function(err) {
@@ -177,8 +197,8 @@ app.controller('TestCtrl', ['$scope', '$http',
         }
     }
 ]).
-controller('LoginCtrl', ['$scope', '$http', '$location',
-    function($scope, $http, $location) {
+controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'AuthenticationService',
+    function($rootScope, $scope, $http, $location, AuthenticationService) {
         $scope.login = function(email, password) {
             console.log("Attempting log in for " + email);
             var credentials = {
@@ -186,73 +206,25 @@ controller('LoginCtrl', ['$scope', '$http', '$location',
                 'password' : password
             };
 
+            return $http.post('/users/login', credentials).then(successLogin, failed);
+        }
 
-            return $http.post('/users/login', credentials).then(
-                function(res) {
-                    $location.path('/home');
-                }, function(err) {
-                    console.err(err);
-                    return null;
-                } 
-            );
+        function successLogin(res) {
+            console.log("Log in Successful");
+            AuthenticationService.setCurrentUser(res.data);
+            $location.path('/home');
+        }
+
+        function failed(res) {
+            $rootScope.stopAndReport(res.data);
         }
     }
+]).
+controller('UserCtrl', ['$rootScope','$scope',
+    function($rootScope, $scope) {
+        $scope.user = $rootScope.currentUserData.user;
+    }
 ]);
-// .factory('AuthenticationService', ['$rootScope', 'UserService',
-//     function($rootScope, UserService) {
-//         var service = {};
-
-//         service.Login = Login;
-//         service.isAuthenticated = isAuthenticated;
-//         service.isAuthorized = isAuthorized;
-//         service.setCurrentUser = setCurrentUser;
-//         service.clearCurrentUser = clearCurrentUser;
-
-//         return service;
-
-//         function Login(email, password) {
-//             var credentials = {
-//                 'email' : email,
-//                 'password' : password
-//             }
-
-//             return UserService.Login(credentials).then(handleSuccess, handleError("Invalid email and/or password"));
-//         }
-
-//         function isAuthenticated() {
-//             return ($rootScope.currentUserData !== null);
-//         }
-
-//         function setCurrentUser(data) {
-//             window.localStorage.setItem("user", JSON.stringify(data));
-//             $rootScope.currentUserData = data;
-//         }
-
-//         function clearCurrentUser() {
-//             window.localStorage.clear();
-//             $rootScope.currentUserData = null;
-//             $rootScope.requestedPerson = null;
-//             $rootScope.requestedUser = null;
-//         }
-
-//         function isAuthorized(good_roles) {
-//             //return (good_roles.indexOf($rootScope.currentUserData.user.user_role) !== -1);
-//             for(var index in $rootScope.currentUserData.user.user_role) {
-//                 if (good_roles.indexOf($rootScope.currentUserData.user.user_role[index]) !== -1) return true;
-//             }
-
-//             return false;
-//         }
-
-//         function handleSuccess(res) {
-//             return {"data" : res.data};
-//         }
-
-//         function handleError(error) {
-//             return {"message" : error};
-//         }
-//     }
-// ]);
 
 // app.controller('UserCtrl', ['$scope', '$rootScope', '$location', 'USER_ROLES', 'AuthenticationService', 'UserService', 'EmailService',
 //     function($scope, $rootScope, $location, USER_ROLES, AuthenticationService, UserService, EmailService) {
