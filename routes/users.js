@@ -22,9 +22,7 @@ router.get('/', function(req, res, next) {
 // });
 
 router.post('/', function(req, res, next) {
-    var user = {
-
-    };
+    var user = {};
 
     User.findOne({"email" : user.email}, function(err, user1) {
         if (err) return next(err);
@@ -48,7 +46,6 @@ router.post('/login', function(req, res, next) {
     var db = req.db;
     var user_coll = db.get('users');
 
-    console.log("Made it! " + email + " " + password);
     user_coll.findOne({'email': email, 'password': password}, function(err, user) {
     	if (err) return next(err);
     	else if (!user) res.status(401).json({"message": "invalid username and/or password"});
@@ -64,21 +61,10 @@ router.post('/login', function(req, res, next) {
                 else if (!powers) res.json({"user" : user, "timestamp" : timestamp});
                 
                 user.abilities = powers.abilities;
-                console.log(user);
                 res.json({"user" : user, "timestamp" : timestamp});
             });
     	}
     });
-    // User.findOne({'email' : email, 'password' : password}, function(err,user) {
-    //     if (err) return next(err);
-    //     if (!user) res.status(401).json({"message" : "Invalid username and/or password"});
-    //     else {
-    //         delete user.password;
-
-    //         var timestamp = new Date(new Date().getTime()).toLocaleString();
-    //         res.json({"user" : user, "timestamp" : timestamp});
-    //     }
-    // });
 });
 
 router.put('/:email', function(req, res, next) {
@@ -104,24 +90,6 @@ router.put('/:email', function(req, res, next) {
             res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
         });
     });
-
-    //res.json({"success": true});
-    // var aUser = new User(req.body);
-
-    // User.findOne({"email" : req.params.email}, function(err, user) {
-    //     if (err) return next(err);
-    //     if (!user) res.status(404).json({"message" : "User " + req.params.email + " can't be updated at this time"});
-
-    //     else {
-    //         aUser._id = user._id;
-
-    //         User.update({'email' : req.params.email}, aUser, {'upsert' : true}, function(err2) {
-    //             if (err2) return next(err2);
-
-    //             res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
-    //         });
-    //     }
-    // });
 });
 
 module.exports = router;
