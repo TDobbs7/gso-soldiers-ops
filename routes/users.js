@@ -22,9 +22,11 @@ router.get('/', function(req, res, next) {
 // });
 
 router.post('/', function(req, res, next) {
+    var db = req.db;
+    var user_coll = db.get('users');
     var user = {};
 
-    User.findOne({"email" : user.email}, function(err, user1) {
+    user_coll.findOne({"email" : user.email}, function(err, user1) {
         if (err) return next(err);
         if (user1) res.status(400).json({"message" : "The email address " + user.email + " is already in use."});
         else {
