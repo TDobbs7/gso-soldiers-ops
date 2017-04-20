@@ -22,9 +22,11 @@ router.get('/', function(req, res, next) {
 // });
 
 router.post('/', function(req, res, next) {
+    var db = req.db;
+    var user_coll = db.get('users');
     var user = {};
 
-    User.findOne({"email" : user.email}, function(err, user1) {
+    user_coll.findOne({"email" : user.email}, function(err, user1) {
         if (err) return next(err);
         if (user1) res.status(400).json({"message" : "The email address " + user.email + " is already in use."});
         else {
@@ -82,7 +84,7 @@ router.put('/:email', function(req, res, next) {
 
         new_user._id = user._id;
 
-        user_coll.update({"email": req.params.email}, new_user, {'upsert': true}, function(err) {
+        user_coll.update({"email": req.params.email}, {$set: new_user}, function(err) {
             if (err) {
                 console.error(err);
                 return next(err);
