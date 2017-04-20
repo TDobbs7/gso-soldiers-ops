@@ -1,11 +1,11 @@
 <div class="container">
-	<h3>Welcome, {{currentUserData.user.fname}} {{currentUserData.user.lname}}</h3>
-	<h5>{{currentUserData.user.role.class}}: {{currentUserData.user.role.position}}</h5>
+	<h3>Welcome, {{user.fname}} {{user.lname}}</h3>
+	<h5>{{user.role.class}}: {{user.role.position}}</h5>
 
 	<h4>What would you like to do?</h4>
 	
 	<div class="form-group" id="ability-1">
-        <div data-ng-repeat="(index,ability) in currentUserData.user.abilities">
+        <div data-ng-repeat="(index,ability) in user.abilities">
             <p id="ab-{{index}}">{{ability}}</p>
         </div>
     </div>

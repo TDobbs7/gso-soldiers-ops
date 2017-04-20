@@ -17,6 +17,7 @@ app.config(['$routeProvider',
             }).
             when('/home', {
                 templateUrl: '/views/home.html',
+                controller: 'UserCtrl',
                 require_login: true,
                 good_roles: ["all"]
             }).
@@ -116,7 +117,7 @@ app.factory('UserService', ['$http', '$rootScope',
         }
 
         function UpdateUser(user) {
-            return $http.put('/users/' + user.email, user).then(handleSuccess, handleError('Error updating user'));
+            return $http.put('/users/' + user.email, user).then(handleSuccess, handleError);
         }
 
         // private functions
@@ -183,7 +184,7 @@ app.controller('TestCtrl', ['$scope', '$http',
     function($scope, $http) {
         $scope.init = function() {
             console.log("Hey!")
-            return $http.post('/init/abilities')
+            return $http.put('/init/pass')
                 .success(function(res){
                     console.log("yay!");
                 }).error(function(err) {
