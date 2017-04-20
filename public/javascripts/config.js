@@ -3,6 +3,7 @@ var app = angular.module('gso-soldiers-ops');
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
+            //General user routes
             when('/', {
                 templateUrl: '/views/login.html',
                 controller: 'LoginCtrl',
@@ -25,8 +26,15 @@ app.config(['$routeProvider',
                 require_login: true,
                 good_roles: ["all"]
             }).
+            //admin routes
+            when('/admin/game_sched', {
+                templateUrl: '/views/admin-game_sched',
+                controller: 'Game_SchedCtrl',
+                require_login: true,
+                good_roles: ["Admin"]
+            }). 
             otherwise({
                 redirectTo: '/'
             });
     }
-]).config(['$routeProvider']);
+]);
