@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     var db = req.db;
-    var user_coll = db.get('users');
+    var user_coll = db.collection('users');
 
     user_coll.find({}, {}, function(err, users) {
     	if (err) throw err;
@@ -37,20 +37,20 @@ router.post('/login', function(req, res, next) {
     var password = req.body.password;
 
     var db = req.db;
-    var user_coll = db.get('users');
+    var user_coll = db.collection('users');
 
     user_coll.findOne({'email': email, 'password': password}, function(err, user) {
-    	if (err) return next(err);
+    	if (err) res.status(500).json(err);
     	else if (!user) res.status(401).json({"message": "invalid username and/or password"});
     	else {
     		delete user.password;
 
-            var abs_coll = db.get('abilities');
+            var abs_coll = db.collection('abilities');
 
             abs_coll.findOne({'role': user.role.class}, {}, function(err, powers) {
                 var timestamp = new Date(new Date().getTime()).toLocaleString();
 
-                if (err) return next(err);
+                if (err) res.status(500).json(err);
                 else if (!powers) res.json({"user" : user, "timestamp" : timestamp});
                 
                 user.abilities = powers.abilities;
@@ -62,20 +62,20 @@ router.post('/login', function(req, res, next) {
 
 router.put('/:email', function(req, res, next) {
     var db = req.db;
-    var user_coll = db.get('users');
+    var user_coll = db.collection('users');
     var new_user = req.body;
 
     user_coll.findOne({"email": req.params.email}, function(err, user) {
         if (err) {
             console.error(err);
-            return next(err);
+            res.status(500).json(err);
         } 
 
         if (!user) res.status(404).json({"message" : "User " + req.params.email + " can't be updated at this time"});
 
         new_user._id = user._id;
 
-        user_coll.update({"email": req.params.email}, {$set: new_user}, function(err) {
+        user_coll.update({"email": req.params.email}, {$set: {new_user}}, function(err) {
             if (err) {
                 console.error(err);
                 return next(err);
