@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
 
-    user_coll.find({}, {}, function(err, users) {
+    user_coll.find({}).toArray(function(err, users) {
     	if (err) throw err;
 		else res.json({"users": users});
     });
@@ -21,7 +21,7 @@ router.post('/', function(req, res, next) {
         if (err) return next(err);
         if (user1) res.status(400).json({"message" : "The email address " + user.email + " is already in use."});
         else {
-            user_coll.insert(function(err, ins) {
+            user_coll.insert(user, function(err, ins) {
                 if (err) return next(err);
 
                 res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
