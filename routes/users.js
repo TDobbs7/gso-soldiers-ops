@@ -14,16 +14,14 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     var db = req.db;
-    var user_coll = db.get('users');
-    var user = {};
+    var user_coll = db.collection('users');
+    var user = req.body;
 
     user_coll.findOne({"email" : user.email}, function(err, user1) {
         if (err) return next(err);
         if (user1) res.status(400).json({"message" : "The email address " + user.email + " is already in use."});
         else {
-            user.user_role = "regular";
-
-            user.save(function(err) {
+            user_coll.insert(function(err, ins) {
                 if (err) return next(err);
 
                 res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
