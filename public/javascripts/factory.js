@@ -1,35 +1,40 @@
 var app = angular.module('gso-soldiers-ops');
 
-app.factory('UserService', ['$http', '$rootScope',
-    function($http, $rootScope) {
+app.factory('UserService', ['$http', 'OpsService',
+    function($http, OpsService) {
         var service = {};
 
         service.GetAllUsers = GetAllUsers;
         service.GetByEmail = GetByEmail;
         service.AddNewUser = AddNewUser;
         service.UpdateUser = UpdateUser;
+        service.DeleteUser = DeleteUser;
         service.Login = Login;
 
         return service;
 
         function GetAllUsers() {
-            return $http.get('/users').then(handleSuccess, handleError('Error getting all users'));
+            return $http.get('/users').then(handleSuccess, handleError);
         }
 
         function GetByEmail(email) {
-            return $http.get('/users/email/' + email).then(handleSuccess, handleError('Error getting user by username'));
+            return $http.get('/users/' + email).then(handleSuccess, handleError);
         }
 
         function AddNewUser(user) {
-            return $http.post('/users', user).then(handleSuccess, handleError('Error creating user'));
+            return $http.post('/users', user).then(handleSuccess, handleError);
         }
 
         function Login(credentials) {
-            return $http.post('/users/login', credentials).then(handleSuccess, handleError('Invalid email and/or password'));
+            return $http.post('/users/login', credentials).then(handleSuccess, handleError);
         }
 
         function UpdateUser(user) {
-            return $http.put('/users/' + user.email, user).then(handleSuccess, handleError('Error updating user'));
+            return $http.put('/users', user).then(handleSuccess, handleError);
+        }
+
+        function DeleteUser(user) {
+            return $http.delete('/users/' + user.email, user).then(handleSuccess, handleError);
         }
 
         // private functions
@@ -91,31 +96,40 @@ factory('AuthenticationService', ['$rootScope', 'UserService',
         }
     }
 ]).
-factory('OpsService', ['$http', '$rootScope',
-    function($http, $rootScope) {
+factory('OpsService', ['$http',
+    function($http) {
         var service = {};
 
         service.GetAllOps = GetAllOps;
         service.GetOpsByEmail = GetOpsByEmail;
         service.AddNewOp = AddNewOp;
         service.UpdateOp = UpdateOp;
+        service.DeleteOp = DeleteOp;
 
         return service;
 
         function GetAllOps() {
-            return $http.get('/ops').then(handleSuccess, handleError('Error getting all operations'));
+            return $http.get('/ops').then(handleSuccess, handleError);
         }
 
         function GetOpsByEmail(email) {
-            return $http.get('/ops/email/' + email).then(handleSuccess, handleError('Error getting operations by username'));
+            return $http.get('/ops/email/' + email).then(handleSuccess, handleError);
+        }
+
+        function GetOpsByType(type) {
+            return $http.get('/ops/type/' + type).then(handleSuccess, handleError);
         }
 
         function AddNewOp(op) {
-            return $http.post('/ops', op).then(handleSuccess, handleError('Error creating operation'));
+            return $http.post('/ops', op).then(handleSuccess, handleError);
         }
 
         function UpdateOp(op) {
-            return $http.put('/ops/' + op._id, op).then(handleSuccess, handleError('Error updating operation'));
+            return $http.put('/ops/' + op._id, op).then(handleSuccess, handleError);
+        }
+
+        function DeleteOp(op) {
+            return $http.delete('/ops/' + op._id).then(handleSuccess, handleError);
         }
 
         // private functions
@@ -125,7 +139,7 @@ factory('OpsService', ['$http', '$rootScope',
         }
 
         function handleError(error) {
-            return {"message" : error};
+            return {"message" : error.message};
         }
     }
 ]);

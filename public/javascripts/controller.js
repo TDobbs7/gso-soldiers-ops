@@ -40,7 +40,7 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'Authenti
 controller('UserCtrl', ['$rootScope','$scope',
     function($rootScope, $scope) {
         $scope.user = $rootScope.currentUserData.user;
-        function handleOperation(ability) {
+        function handleAbility(ability) {
 
         }
     }
