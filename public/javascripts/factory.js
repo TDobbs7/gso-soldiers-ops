@@ -128,8 +128,51 @@ factory('OpsService', ['$http',
             return $http.put('/ops/' + op._id, op).then(handleSuccess, handleError);
         }
 
-        function DeleteOp(op) {
+        function DeleteOp(id) {
             return $http.delete('/ops/' + op._id).then(handleSuccess, handleError);
+        }
+
+        // private functions
+
+        function handleSuccess(res) {
+            return {"data" : res.data};
+        }
+
+        function handleError(error) {
+            return {"message" : error.message};
+        }
+    }
+]).
+factory('MedReqService', ['$http',
+    function($http) {
+        var service = {};
+
+        service.GetAllMedReqs = GetAllMedReqs;
+        service.GetMedReqsByEmail = GetMedReqsByEmail;
+        service.AddNewMedReq = AddNewMedReq;
+        service.UpdateMedReq = UpdateMedReq;
+        service.DeleteMedReq = DeleteMedReq;
+
+        return service;
+
+        function GetAllMedReqs() {
+            return $http.get('/med_reqs').then(handleSuccess, handleError);
+        }
+
+        function GetMedReqsByEmail(email) {
+            return $http.get('/med_reqs/' + email).then(handleSuccess, handleError);
+        }
+
+        function AddNewMedReq(med_req) {
+            return $http.post('/med_reqs', med_req).then(handleSuccess, handleError);
+        }
+
+        function UpdateMedReq(med_req) {
+            return $http.put('/med_reqs/' + med_req._id, med_req).then(handleSuccess, handleError);
+        }
+
+        function DeleteMedReq(id) {
+            return $http.delete('/med_reqs/' + med_req._id).then(handleSuccess, handleError);
         }
 
         // private functions

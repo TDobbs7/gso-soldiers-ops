@@ -18,11 +18,11 @@ router.post('/', function(req, res, next) {
     var user = req.body;
 
     user_coll.findOne({"email" : user.email}, function(err, user1) {
-        if (err) res.status(500).json({"message": err});
+        if (err) res.status(500).json({"message": "Error adding user (" + user.email + ")\n" + err});
         if (user1) res.status(400).json({"message" : "The email address " + user.email + " is already in use."});
         else {
             user_coll.insert(user, function(err, ins) {
-                if (err) return next(err);
+                if (err) res.status(500).json({"message": "Error adding user (" + user.email + ")\n" + err});
 
                 res.json({"message": "success", "data" : {"timestamp": new Date(new Date().getTime()).toUTCString()}});
             });
@@ -38,7 +38,7 @@ router.post('/login', function(req, res, next) {
     var user_coll = db.collection('users');
 
     user_coll.findOne({'email': email, 'password': password}, function(err, user) {
-    	if (err) res.status(500).json({"message": err});
+    	if (err) res.status(500).json({"message": "Error logging in users\n" + err});
     	else if (!user) res.status(401).json({"message": "invalid username and/or password"});
     	else {
     		delete user.password;
@@ -48,7 +48,7 @@ router.post('/login', function(req, res, next) {
             abs_coll.findOne({'role': user.role.class}, {}, function(err, powers) {
                 var timestamp = new Date(new Date().getTime()).toLocaleString();
 
-                if (err) res.status(500).json(JSON.stringify(err));
+                if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});
                 else if (!powers) res.json({"message": "success", "data": {"user": user, "timestamp" : timestamp}});
                 
                 user.abilities = powers.abilities;
@@ -62,9 +62,10 @@ router.put('/', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
     var new_user = req.body;
+    var email = req.params.email;
 
-    user_coll.update({"email": req.params.email}, {$set: {new_user}}, function(err) {
-        if (err) res.status(500).json({"message" : err});
+    user_coll.update({"email": email}, {$set: {new_user}}, function(err) {
+        if (err) res.status(500).json({"message": "Error updating user (" + email + ")\n" + err});
         else res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
     });
 });
@@ -72,10 +73,11 @@ router.put('/', function(req, res, next) {
 router.delete('/:email', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
+    var email = req.params.email;
 
-    user_coll.remove({}, function(err, del) {
-        if (err) res.status(500).json({"message": err});
-        else res.json({"message": "success"})
+    user_coll.remove({"email": email}, function(err, del) {
+        if (err) res.status(500).json({"message": "Error deleting user (" + email + ")\n" + err});
+        else res.json({"message": "success"});
     });
 });
 
