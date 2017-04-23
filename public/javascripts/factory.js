@@ -48,8 +48,8 @@ app.factory('UserService', ['$http', 'OpsService',
         }
     }
 ]).
-factory('AuthenticationService', ['$rootScope', 'UserService',
-    function($rootScope, UserService) {
+factory('AuthenticationService', ['$rootScope',
+    function($rootScope) {
         var service = {};
 
         service.isAuthenticated = isAuthenticated;
@@ -85,14 +85,6 @@ factory('AuthenticationService', ['$rootScope', 'UserService',
             }
 
             return false;
-        }
-
-        function handleSuccess(res) {
-            return {"data" : res.data};
-        }
-
-        function handleError(error) {
-            return {"message" : error};
         }
     }
 ]).
