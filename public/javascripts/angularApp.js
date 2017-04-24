@@ -9,7 +9,7 @@ app.run(function($location, $rootScope, $route, AuthenticationService, UserServi
 
     $rootScope.logout = function() {
         $rootScope.currentUserData.last_login = $rootScope.currentUserData.timestamp;
-        UserService.UpdateUser($rootScope.currentUserData.user).then(function(res) {
+        UserService.UpdateUser($rootScope.currentUserData).then(function(res) {
             AuthenticationService.clearCurrentUser();
 
             changeRoute('/');

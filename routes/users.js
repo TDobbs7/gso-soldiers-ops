@@ -75,9 +75,17 @@ router.put('/', function(req, res, next) {
     var user_coll = db.collection('users');
     var upd_user = req.body;
 
-    user_coll.update({"email": upd_user.email}, {$set: {upd_user}}, function(err) {
-        if (err) res.status(500).json({"message": "Error updating user (" + upd_user.email + ")\n" + err});
-        else res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
+    user_coll.findOne({'email': upd_user.email}, {}, function(err, user) {
+        if (err) res.status(500).json({"message": "Error finding user (" + upd_user.email + ")\n" + err});
+        else if (!user) res.status(404).json({"message": "User (" + upd_user.email + ") not found"});
+        else {
+            upd_user._id = user._id;
+
+            user_coll.replaceOne(user, upd_user, function(err) {
+                if (err) res.status(500).json({"message": "Error updating user (" + upd_user.email + ")\n" + err});
+                else res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
+            });
+        }
     });
 });
 
