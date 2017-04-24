@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     var med_coll = db.collection('medical_req');
 
     med_coll.find({}).toArray(function(err, med_reqs) {
-    	if (err) return next(err);
+    	if (err) res.status(500).json({"message": "Error getting medical requests\n" + err});
 		else res.json({"medical_reqs": med_reqs});
     });
 });
@@ -19,7 +19,7 @@ router.get('/:email', function(req, res, next) {
     var email = req.params.email;
 
     med_coll.find({$or:[{'staff': email}, {'player': email}]}).toArray(function(err, med_reqs) {
-    	if (err) return next(err);
+    	if (err) res.status(500).json({"message": "Error getting medical requests (" + email + ")\n" + err});
 		else res.json({"medical_reqs": med_reqs});
     });
 });
@@ -29,35 +29,33 @@ router.post('/', function(req, res, next) {
     var med_coll = db.collection('medical_req');
     var med_req = req.body;
 
-    med_coll.insert(op, function(err, ins) {
-    	if (err) return next(err);
+    med_coll.insert(med_req, function(err, ins) {
+    	if (err) res.status(500).json({"message": "Error adding medical request (" + med_req._id + ")\n" + err});
 		else res.json({"success": true});
     });
 });
 
-router.put('/:id', function(req, res, next) {
+router.put('/:_id', function(req, res, next) {
     var db = req.db;
-    var user_coll = db.collection('medical_req');
-    var new_user = req.body;
+    var med_coll = db.collection('medical_req');
+    var new_med_req = req.body;
 
-    user_coll.findOne({"email": req.params.email}, function(err, user) {
-        if (err) {
-            console.error(err);
-            res.status(500).json(err);
-        } 
-
-        if (!user) res.status(404).json({"message" : "User " + req.params.email + " can't be updated at this time"});
-
-        new_user._id = user._id;
-
-        user_coll.update({"email": req.params.email}, {$set: {new_user}}, function(err) {
-            if (err) {
-                console.error(err);
-                return next(err);
-            }
-            res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
-        });
+    med_coll.update({"_id": req.params._id}, {$set: {new_med_req}}, function(err) {
+        if (err) res.status(500).json({"message": "Error updating medical request (" + med_req._id + ")\n" + err});
+        res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
     });
 });
+
+router.delete('/:_id', function(req, res, next) {
+    var db = req.db;
+    var med_coll = db.collection('medical_req');
+    var _id = req.params._id;
+
+    med_coll.remove({"_id": _id}, function(err, del) {
+        if (err) res.status(500).json({"message": "Error deleting medical request (" + _id + ")\n" + err});
+        else res.json({"message": "success"});
+    });
+});
+
 
 module.exports = router;

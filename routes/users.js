@@ -7,26 +7,36 @@ router.get('/', function(req, res, next) {
     var user_coll = db.collection('users');
 
     user_coll.find({}).toArray(function(err, users) {
-    	if (err) throw err;
-		else res.json({"users": users});
+    	if (err) res.status(500).json({"message": "Error getting users\n" + err});
+		else res.json({"message": "success", "data": {"users": users}});
+    });
+});
+
+router.get('/:email', function(req, res, next) {
+    var db = req.db;
+    var user_coll = db.collection('users');
+    var email = req.params.email;
+
+    user_coll.findOne({'email': email}, function(err, user) {
+        if (err) res.status(500).json({"message": "Error finding user (" + email + ")\n" + err});
+        else if (!user) res.status(404).json({"message": "User ("  + email + ") not found"});
+        else res.json({"message": "success", "data" : {"user": user}});
     });
 });
 
 router.post('/', function(req, res, next) {
     var db = req.db;
-    var user_coll = db.get('users');
-    var user = {};
+    var user_coll = db.collection('users');
+    var user = req.body;
 
     user_coll.findOne({"email" : user.email}, function(err, user1) {
-        if (err) return next(err);
+        if (err) res.status(500).json({"message": "Error adding user (" + user.email + ")\n" + err});
         if (user1) res.status(400).json({"message" : "The email address " + user.email + " is already in use."});
         else {
-            user.user_role = "regular";
+            user_coll.insert(user, function(err, ins) {
+                if (err) res.status(500).json({"message": "Error adding user (" + user.email + ")\n" + err});
 
-            user.save(function(err) {
-                if (err) return next(err);
-
-                res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
+                res.json({"message": "success", "data" : {"timestamp": new Date(new Date().getTime()).toUTCString()}});
             });
         }
     });
@@ -40,7 +50,7 @@ router.post('/login', function(req, res, next) {
     var user_coll = db.collection('users');
 
     user_coll.findOne({'email': email, 'password': password}, function(err, user) {
-    	if (err) res.status(500).json(err);
+    	if (err) res.status(500).json({"message": "Error logging in users\n" + err});
     	else if (!user) res.status(401).json({"message": "invalid username and/or password"});
     	else {
     		delete user.password;
@@ -50,38 +60,35 @@ router.post('/login', function(req, res, next) {
             abs_coll.findOne({'role': user.role.class}, {}, function(err, powers) {
                 var timestamp = new Date(new Date().getTime()).toLocaleString();
 
-                if (err) res.status(500).json(err);
-                else if (!powers) res.json({"user" : user, "timestamp" : timestamp});
+                if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});
+                else if (!powers) res.json({"message": "success", "data": {"user": user, "timestamp" : timestamp}});
                 
                 user.abilities = powers.abilities;
-                res.json({"user" : user, "timestamp" : timestamp});
+                res.json({"message": "success", "data": {"user" : user, "timestamp" : timestamp}});
             });
     	}
     });
 });
 
-router.put('/:email', function(req, res, next) {
+router.put('/', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
-    var new_user = req.body;
+    var upd_user = req.body;
 
-    user_coll.findOne({"email": req.params.email}, function(err, user) {
-        if (err) {
-            console.error(err);
-            res.status(500).json(err);
-        } 
+    user_coll.update({"email": upd_user.email}, {$set: {upd_user}}, function(err) {
+        if (err) res.status(500).json({"message": "Error updating user (" + upd_user.email + ")\n" + err});
+        else res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
+    });
+});
 
-        if (!user) res.status(404).json({"message" : "User " + req.params.email + " can't be updated at this time"});
+router.delete('/:email', function(req, res, next) {
+    var db = req.db;
+    var user_coll = db.collection('users');
+    var email = req.params.email;
 
-        new_user._id = user._id;
-
-        user_coll.update({"email": req.params.email}, {$set: {new_user}}, function(err) {
-            if (err) {
-                console.error(err);
-                return next(err);
-            }
-            res.json({"timestamp" : new Date(new Date().getTime()).toUTCString()});
-        });
+    user_coll.remove({"email": email}, function(err, del) {
+        if (err) res.status(500).json({"message": "Error deleting user (" + email + ")\n" + err});
+        else res.json({"message": "success"});
     });
 });
 
