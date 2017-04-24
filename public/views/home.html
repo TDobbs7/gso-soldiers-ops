@@ -1,12 +1,55 @@
-<div class="container">
-	<h3>Welcome, {{user.fname}} {{user.lname}}</h3>
-	<h5>{{user.role.class}}: {{user.role.position}}</h5>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GSO</title>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="stylesheets/bootstrap.vertical-tabs.css">
+</head>
+<body>
 
-	<h4>What would you like to do?</h4>
-	
-	<div class="form-group" id="ability-1">
-        <div data-ng-repeat="(index,ability) in user.abilities">
-            <p id="ab-{{index}}">{{ability}}</p>
-        </div>
+  <div class="container">
+    <div class="page-header">
+      <h1>Welcome, {{user.fname}} {{user.lname}} <small> | {{user.role.class}}: {{user.role.position}}</small></h1>
     </div>
-</div>
+
+    <div class="row" style="min-height:600px;">
+      <div  class="col-sm-6">
+        <h3>What would you like to do?</h3>
+        <hr/>
+        <div class="col-xs-3"> <!-- required for floating -->
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs tabs-left">
+            <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+            <li><a href="#profile" data-toggle="tab">Profile</a></li>
+            <li><a href="#messages" data-toggle="tab">Messages</a></li>
+            <li><a href="#settings" data-toggle="tab">Settings</a></li>
+          </ul>
+        </div>
+
+        <div class="col-xs-9">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="home">Home Tab.</div>
+            <div class="tab-pane" id="profile">Profile Tab.</div>
+            <div class="tab-pane" id="messages">Messages Tab.</div>
+            <div class="tab-pane" id="settings">Settings Tab.</div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer" style="width:100%; text-align:center; padding-bottom:20px;">
+    <hr/>
+    <a href="https://github.com/dbtek/bootstrap-vertical-tabs">Bootstrap Vertical Tabs</a> is brought to you by <a href="http://ismaildemirbilek.com">dbtek</a>, open sourced under <a href="opensource.org/licenses/MIT">MIT</a> license.
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</body>
+</html>

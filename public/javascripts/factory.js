@@ -64,12 +64,10 @@ factory('AuthenticationService', ['$rootScope',
         }
 
         function setCurrentUser(res) {
-            console.log(res.data.user);
             window.localStorage.setItem("user", JSON.stringify(res.data.user));
             $rootScope.currentUserData = res.data.user;
-            console.log($rootScope.currentUserData);
         }
-
+        
         function clearCurrentUser() {
             window.localStorage.clear();
             $rootScope.currentUserData = null;
