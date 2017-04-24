@@ -1,10 +1,10 @@
 "use strict";
 
-var app = angular.module('gso-soldiers-ops', ['ngRoute']);
+var app = angular.module('gso-soldiers-ops', ['ui.router']);
 
-app.run(function($location, $rootScope, $route, AuthenticationService, UserService) {
+app.run(function($location, $rootScope, $state, AuthenticationService, UserService) {
     $rootScope.location = $location;
-    changeRoute($location.path());
+    // changeState($location.path());
     $rootScope.currentUserData = JSON.parse(window.localStorage.getItem("user"));
 
     $rootScope.logout = function() {
@@ -12,11 +12,11 @@ app.run(function($location, $rootScope, $route, AuthenticationService, UserServi
         UserService.UpdateUser($rootScope.currentUserData).then(function(res) {
             AuthenticationService.clearCurrentUser();
 
-            changeRoute('/');
-            $location.path('/');
+            //changeState('login');
+            $state.go('login')
 
             alert("You have logged out");
-            $route.reload();
+            $state.reload();
         }, function(res) {
           $rootScope.stopAndReport(res.data);
         });
@@ -27,38 +27,38 @@ app.run(function($location, $rootScope, $route, AuthenticationService, UserServi
         alert(res.message);
     }
 
-    function changeRoute(route) {
-        $rootScope.route = $route.routes[route];
-    }
+   /* function changeState(state) {
+        $rootScope.state = state;
+    }*/
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
         var next_path = $location.path();
-        var next_route = $route.routes[next_path];
+        //var next_route = $route.routes[next_path];
 
         if (next_path == '/' && AuthenticationService.isAuthenticated()) {
             event.preventDefault();
-            changeRoute('/home');
+            changeState('/home');
             $location.path('/home');
         }
 
-        if (next_route && next_route.require_login) {
+        if ($state.current.require_login) {
             if(!AuthenticationService.isAuthenticated()) {
                 $rootScope.stopAndReport({'message' : "You must be logged in first"});
-                changeRoute('/');
+                changeState('/');
                 $location.path('/');
             }
-            else if (!AuthenticationService.isAuthorized(next_route.good_roles)) {
+            else if (!AuthenticationService.isAuthorized($state.current.good_roles)) {
                 $rootScope.stopAndReport({'message' : "You are not authorized to view this page : " + $rootScope.currentUserData.user.role.class + ", " + $rootScope.currentUserData.user.role.position});
 
                 next_path = '/home';
-                changeRoute(next_path);
+                changeState(next_path);
                 $location.path(next_path);
             } else {
-                changeRoute(next_path);
+                changeState(next_path);
                 $location.path(next_path);
             }
         }
 
-        $route.reload();
+       //$state.reload();
     });
 });

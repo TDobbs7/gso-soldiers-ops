@@ -33,7 +33,7 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserServ
         }
 
         function failed(res) {
-            console.log(res.message);
+            console.log(res.data.message);
             $rootScope.stopAndReport(res.data);
         }
     }

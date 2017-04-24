@@ -5,7 +5,7 @@
 
         <!--Angular JS-->
         <script src="/javascripts/angular.min.js"></script>
-        <script src="/javascripts/angular-route.min.js"></script>
+        <script src="/javascripts/angular-ui-router.min.js"></script>
         <script src="/javascripts/jquery-1.12.1.min.js"></script>
         <script src="/javascripts/angularApp.js"></script>
         <script src="/javascripts/config.js"></script>
@@ -32,12 +32,12 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <ul class="nav navbar-nav navbar-right" >
-                    <li data-ng-if="route.require_login"><a style="color: black; background-color: transparent" role="button" target="_blank" data-ng-click="logout()">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
+                    <li data-ng-if="state.require_login"><a style="color: black; background-color: transparent" role="button" target="_blank" data-ng-click="logout()">Log Out <span class="glyphicon glyphicon-log-out"></span></a></li>
                 </ul>
 
             </div>
         </nav>
-        <div data-ng-view>
+        <div ui-view>
 
         </div>
         <footer class="footer" style="width:100%; text-align:center; padding-bottom:20px;">

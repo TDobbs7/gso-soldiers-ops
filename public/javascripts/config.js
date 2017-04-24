@@ -1,6 +1,6 @@
 var app = angular.module('gso-soldiers-ops');
 
-app.config(['$routeProvider',
+/*app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             //General user routes
@@ -29,6 +29,27 @@ app.config(['$routeProvider',
             }). 
             otherwise({
                 redirectTo: '/'
+            });
+    }
+]);*/
+
+app.config(['$stateProvider', '$urlRouterProvider', 
+    function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('login');
+
+        $stateProvider.
+            state('login', {
+                url: '/login',
+                templateUrl: '/views/login.html',
+                controller: 'LoginCtrl',
+                require_login: false
+            }).
+            state('home', {
+                url: '/home',
+                templateUrl: '/views/home.html',
+                controller: 'UserCtrl',
+                require_login: true,
+                good_roles: ["all"]
             });
     }
 ]);
