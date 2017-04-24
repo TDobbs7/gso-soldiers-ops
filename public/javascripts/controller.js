@@ -27,12 +27,13 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserServ
         }
 
         function successLogin(res) {
-            console.log("Log in Successful");
+            console.log(res.data.message);
             AuthenticationService.setCurrentUser(res.data);
             $location.path('/home');
         }
 
         function failed(res) {
+            console.log(res.message);
             $rootScope.stopAndReport(res.data);
         }
     }
