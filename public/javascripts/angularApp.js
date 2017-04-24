@@ -8,7 +8,7 @@ app.run(function($location, $rootScope, $route, AuthenticationService, UserServi
     $rootScope.currentUserData = JSON.parse(window.localStorage.getItem("user"));
 
     $rootScope.logout = function() {
-        $rootScope.currentUserData.user.last_login = $rootScope.currentUserData.timestamp;
+        $rootScope.currentUserData.last_login = $rootScope.currentUserData.timestamp;
         UserService.UpdateUser($rootScope.currentUserData.user).then(function(res) {
             AuthenticationService.clearCurrentUser();
 

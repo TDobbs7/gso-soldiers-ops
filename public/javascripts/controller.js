@@ -14,8 +14,8 @@ app.controller('TestCtrl', ['$scope', '$http',
         }
     }
 ]).
-controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'AuthenticationService',
-    function($rootScope, $scope, $http, $location, AuthenticationService) {
+controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserService', 'AuthenticationService',
+    function($rootScope, $scope, $http, $location, UserService, AuthenticationService) {
         $scope.login = function(email, password) {
             console.log("Attempting log in for " + email);
             var credentials = {
@@ -23,7 +23,7 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'Authenti
                 'password' : password
             };
 
-            return $http.post('/users/login', credentials).then(successLogin, failed);
+            return UserService.Login(credentials).then(successLogin, failed);
         }
 
         function successLogin(res) {
@@ -39,7 +39,7 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'Authenti
 ]).
 controller('UserCtrl', ['$rootScope','$scope',
     function($rootScope, $scope) {
-        $scope.user = $rootScope.currentUserData.user;
+        $scope.user = $rootScope.currentUserData;
         function handleAbility(ability) {
 
         }

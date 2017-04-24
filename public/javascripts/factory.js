@@ -63,9 +63,11 @@ factory('AuthenticationService', ['$rootScope',
             return ($rootScope.currentUserData !== null);
         }
 
-        function setCurrentUser(data) {
-            window.localStorage.setItem("user", JSON.stringify(data));
-            $rootScope.currentUserData = data;
+        function setCurrentUser(res) {
+            console.log(res.data.user);
+            window.localStorage.setItem("user", JSON.stringify(res.data.user));
+            $rootScope.currentUserData = res.data.user;
+            console.log($rootScope.currentUserData);
         }
 
         function clearCurrentUser() {
