@@ -49,11 +49,18 @@ router.post('/', function(req, res, next) {
 router.put('/:_id', function(req, res, next) {
     var db = req.db;
     var ops_coll = db.collection('operations');
-    var op = req.body;
+    var upd_op = req.body;
+    var id = req.params._id;
 
-    ops_coll.update({'_id': req.params._id}, op, function(err, ups) {
-        if (err) res.status(500).json({"message": "Error updating operation (" + op._id + ")\n" + err});
-        else res.json({"message": "success"});
+    ops_coll.findOne({'_id': id}, {}, function(err, op) {
+        if (err) res.status(500).json({"message": "Error finding operation (" + id + ")\n" + err});
+        else if (!op) res.status(404).json({"message": "Operation (" + id + ") not found"});
+        else {
+            ops_coll.replaceOne(op, upd_op, function(err) {
+                if (err) res.status(500).json({"message": "Error updating operation (" + id + ")\n" + err});
+                else res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
+            });
+        }
     });
 });
 

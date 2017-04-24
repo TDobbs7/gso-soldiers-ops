@@ -80,6 +80,7 @@ router.put('/', function(req, res, next) {
         else if (!user) res.status(404).json({"message": "User (" + upd_user.email + ") not found"});
         else {
             upd_user._id = user._id;
+            upd_user.password = user.password;
 
             user_coll.replaceOne(user, upd_user, function(err) {
                 if (err) res.status(500).json({"message": "Error updating user (" + upd_user.email + ")\n" + err});
