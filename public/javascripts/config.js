@@ -20,12 +20,6 @@ app.config(['$routeProvider',
                 require_login: true,
                 good_roles: ["all"]
             }).
-            when('/home', {
-                templateUrl: '/views/home.html',
-                controller: 'UserCtrl',
-                require_login: true,
-                good_roles: ["all"]
-            }).
             //admin routes
             when('/admin/game_sched', {
                 templateUrl: '/views/admin-game_sched',
