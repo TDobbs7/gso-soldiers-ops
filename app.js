@@ -5,15 +5,24 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var monk = require('monk');
-var mongo = require('mongodb');
-var db = monk('localhost:27017/gso-soldiers');
+var mongo = require('mongodb').MongoClient;
+var db; //= monk('mongodb://bisoye:bisoye@ds111771.mlab.com:11771/gso-soldiers');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var init = require('./routes/init');
+//var init = require('./routes/init');
+var ops = require('./routes/ops');
+var med_reqs = require('./routes/med_reqs');
+var plays = require('./routes/plays');
 
 var app = express();
 
+
+mongo.connect('mongodb://bisoye:bisoye@ds111771.mlab.com:11771/gso-soldiers', (err, database) => {
+    if (err) return console.log(err)
+    db = database
+    console.log("Connected");
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,7 +42,10 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/init', init);
+//app.use('/init', init);
+app.use('/ops', ops);
+app.use('/med_reqs', med_reqs);
+app.use('/playbook', plays);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

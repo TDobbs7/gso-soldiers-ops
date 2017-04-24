@@ -72,6 +72,8 @@ router.post('/abilities', function(req, res, next) {
             if (err) console.error(err);
         });
     });
+
+    res.json({"success": true});
 });
 
 router.post('/', function(req, res, next) {
@@ -348,6 +350,7 @@ router.post('/', function(req, res, next) {
     	});
     });
 
+    res.json({"success": true});
 });
 
 router.put('/pass', function(req, res, next) {
@@ -365,12 +368,9 @@ router.put('/pass', function(req, res, next) {
                 }
                 else console.log(up);
             });
-        }).success(function(res) {
-            res.json({});
-        }).error(function(err) {
-            console.log("bleh");
-            console.err(err);
         });
+
+        res.json({"success": true});
     });
 });
 
