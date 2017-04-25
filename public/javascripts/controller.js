@@ -1,6 +1,6 @@
 var app = angular.module('gso-soldiers-ops');
 
-app.controller('TestCtrl', ['$scope', '$http', 
+app.controller('TestCtrl', ['$scope', '$http',
     function($scope, $http) {
         $scope.init = function() {
             console.log("Hey!")
@@ -46,12 +46,27 @@ controller('UserCtrl', ['$rootScope','$scope',
         }
     }
 ]).
-controller('Game_SchedCtrl', ['$scope', 
+controller('Game_SchedCtrl', ['$scope',
     function($scope) {
-        
+
+    }
+]).
+controller('Train_SchedCtrl', ['$scope',
+    function($scope) {
+
+    }
+]).
+controller('Med_SchedCtrl', ['$scope',
+    function($scope) {
+      
     }
 ]).
 controller('OpsCtrl', ['$scope',
+    function($scope) {
+
+    }
+]).
+controller('PlaysCtrl', ['$scope',
     function($scope) {
 
     }
@@ -63,6 +78,6 @@ controller('TradesCtrl', ['$scope',
 ]).
 controller('ContractsCtrl', ['$scope',
     function($scope) {
-        
+
     }
 ]);
