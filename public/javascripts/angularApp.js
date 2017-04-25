@@ -2,10 +2,10 @@
 
 var app = angular.module('gso-soldiers-ops', ['ui.router']);
 
-app.run(function($location, $rootScope, $state, AuthenticationService, UserService) {
+app.run(function($location, $rootScope, $state, AuthenticationService, UserService, OpsService) {
     $rootScope.stopAndReport = function(res) {
-        event.preventDefault();
         alert(res.message);
+        return false;
     }
 
     $rootScope.changeState = function(state) {
@@ -19,7 +19,18 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
     $rootScope.logout = function() {
         $rootScope.currentUserData.last_login = $rootScope.currentUserData.timestamp;
         UserService.UpdateUser($rootScope.currentUserData).then(function(res) {
+            // var op = {
+            //     "type": "Logout",
+            //     "user": $rootScope.currentUserData.email,
+            //     "timestamp": $rootScope.currentUserData.timestamp,
+            // }
+
             AuthenticationService.clearCurrentUser();
+            /*OpsService.AddNewOp(op).then(function(res) {
+
+            }, function(res) {
+                $rootScope.stopAndReport(res.data);
+            });*/
 
             $rootScope.changeState('login');
             $state.go('login');

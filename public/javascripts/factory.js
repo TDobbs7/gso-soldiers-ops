@@ -40,11 +40,15 @@ app.factory('UserService', ['$http', 'OpsService',
         // private functions
 
         function handleSuccess(res) {
-            return {"data" : res.data};
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
         }
 
         function handleError(error) {
-            return {"message" : error};
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
         }
     }
 ]).
@@ -125,11 +129,15 @@ factory('OpsService', ['$http',
         // private functions
 
         function handleSuccess(res) {
-            return {"data" : res.data};
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
         }
 
         function handleError(error) {
-            return {"message" : error.message};
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
         }
     }
 ]).
@@ -168,11 +176,15 @@ factory('MedReqService', ['$http',
         // private functions
 
         function handleSuccess(res) {
-            return {"data" : res.data};
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
         }
 
         function handleError(error) {
-            return {"message" : error.message};
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
         }
     }
 ]);

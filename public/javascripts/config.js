@@ -38,6 +38,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
         $urlRouterProvider.otherwise('login');
 
         $stateProvider.
+            state('test', {
+                url: '/test',
+                templateUrl: '/views/test/test.html',
+                controller: 'TestCtrl',
+                require_login: false
+            }).
             state('login', {
                 url: '/login',
                 templateUrl: '/views/login.html',

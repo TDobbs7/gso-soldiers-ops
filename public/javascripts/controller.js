@@ -4,7 +4,7 @@ app.controller('TestCtrl', ['$scope', '$http',
     function($scope, $http) {
         $scope.init = function() {
             console.log("Hey!")
-            return $http.put('/init/pass')
+            return $http.put('/init/abilities')
                 .success(function(res){
                     console.log("yay!");
                 }).error(function(err) {
@@ -23,18 +23,17 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserServ
                 'password' : password
             };
 
-            return UserService.Login(credentials).then(successLogin, failed);
+            var res = UserService.Login(credentials).then(success,failed);
+            return res;
         }
 
-        function successLogin(res) {
-            console.log(res.data.message);
+        function success(res) {
             AuthenticationService.setCurrentUser(res.data);
             $rootScope.changeState('home');
             $location.path('/home');
         }
 
         function failed(res) {
-            console.log(res.data.message);
             $rootScope.stopAndReport(res.data);
         }
     }
@@ -53,9 +52,9 @@ controller('Game_SchedCtrl', ['$scope',
     }
 ]).
 controller('OpsCtrl', ['$scope',
-        function($scope) {
+    function($scope) {
 
-        }
+    }
 ]).
 controller('TradesCtrl', ['$scope',
     function($scope) {
