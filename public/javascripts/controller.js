@@ -14,8 +14,8 @@ app.controller('TestCtrl', ['$scope', '$http',
         }
     }
 ]).
-controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$state', 'UserService', 'AuthenticationService',
-    function($rootScope, $scope, $http, $state, UserService, AuthenticationService) {
+controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserService', 'AuthenticationService',
+    function($rootScope, $scope, $http, $location, UserService, AuthenticationService) {
         $scope.login = function(email, password) {
             console.log("Attempting log in for " + email);
             var credentials = {
@@ -30,7 +30,7 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$state', 'UserService
             console.log(res.data.message);
             AuthenticationService.setCurrentUser(res.data);
             $rootScope.changeState('home');
-            $state.go($rootScope.state);
+            $location.path('/home');
         }
 
         function failed(res) {
