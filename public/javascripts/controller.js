@@ -51,4 +51,19 @@ controller('Game_SchedCtrl', ['$scope',
     function($scope) {
         
     }
+]).
+controller('OpsCtrl', ['$scope',
+        function($scope) {
+
+        }
+]).
+controller('TradesCtrl', ['$scope',
+    function($scope) {
+
+    }
+]).
+controller('ContractsCtrl', ['$scope',
+    function($scope) {
+        
+    }
 ]);

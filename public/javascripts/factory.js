@@ -79,10 +79,8 @@ factory('AuthenticationService', ['$rootScope',
             //return (good_roles.indexOf($rootScope.currentUserData.user.user_role) !== -1);
 
             if (good_roles[0] === "all") return true;
-
-            for(var index in $rootScope.currentUserData.user.user_role) {
-                if (good_roles.indexOf($rootScope.currentUserData.user.user_role[index]) !== -1) return true;
-            }
+            if (good_roles.indexOf($rootScope.currentUserData.role.class) !== -1) return true;
+            
 
             return false;
         }

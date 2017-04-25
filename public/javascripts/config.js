@@ -33,7 +33,7 @@ var app = angular.module('gso-soldiers-ops');
     }
 ]);*/
 
-app.config(['$stateProvider', '$urlRouterProvider', 
+app.config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('login');
 
@@ -50,6 +50,34 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 controller: 'UserCtrl',
                 require_login: true,
                 good_roles: ["all"]
+            }).
+            state('home.ops', {
+                url: '/ops',
+                templateUrl: '/views/ops.html',
+                controller: 'OpsCtrl',
+                require_login: true,
+                good_roles: ["Admin"]
+            }).
+            state('home.contracts', {
+                url: '/contracts',
+                templateUrl: '/views/contracts.html',
+                controller: 'ContractsCtrl',
+                require_login: true,
+                good_roles: ["all"]
+            }).
+            state('home.game_sched', {
+                url: '/game_sched',
+                templateUrl: '/views/game_sched.html',
+                controller: 'Game_SchedCtrl',
+                require_login: true,
+                good_roles: ["all"]
+            }).
+            state('home.trades', {
+                url: '/trades',
+                templateUrl: '/views/trades.html',
+                controller: 'TradesCtrl',
+                require_login: true,
+                good_roles: ["Admin", "Coach"]
             });
     }
 ]);
