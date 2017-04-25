@@ -26,7 +26,7 @@ var app = angular.module('gso-soldiers-ops');
                 controller: 'Game_SchedCtrl',
                 require_login: true,
                 good_roles: ["Admin"]
-            }). 
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -64,10 +64,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 require_login: true,
                 good_roles: ["Admin"]
             }).
-            state('home.contracts', {
+            state('home.contract', {
                 url: '.contracts',
                 templateUrl: '/views/contracts.html',
                 controller: 'ContractsCtrl',
+                require_login: true,
+                good_roles: ["all"]
+            }).
+            state('home.plays', {
+                url: '.plays',
+                templateUrl: '/views/plays.html',
+                controller: 'PlaysCtrl',
                 require_login: true,
                 good_roles: ["all"]
             }).
@@ -77,6 +84,26 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 controller: 'Game_SchedCtrl',
                 require_login: true,
                 good_roles: ["all"]
+            }).
+            state('home.train_sched', {
+                url: '.train_sched',
+                templateUrl: '/views/train_sched.html',
+                controller: 'Train_SchedCtrl',
+                require_login: true,
+                good_roles: ["all"]
+            }).
+            state('home.med_sched', {
+                url: '.med_sched',
+                templateUrl: '/views/med_sched.html',
+                controller: 'Med_SchedCtrl',
+                require_login: true,
+                good_roles: ["all"],
+                resolve: {
+                    MedReqService: "MedReqService",
+                    med_reqs: function(MedReqService) {
+                        return MedReqService.GetAllMedReqs();
+                    }
+                }
             }).
             state('home.trades', {
                 url: '.trades',

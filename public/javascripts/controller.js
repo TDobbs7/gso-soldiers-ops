@@ -1,6 +1,6 @@
 var app = angular.module('gso-soldiers-ops');
 
-app.controller('TestCtrl', ['$scope', '$http', 
+app.controller('TestCtrl', ['$scope', '$http',
     function($scope, $http) {
         $scope.init = function() {
             console.log("Hey!")
@@ -17,14 +17,12 @@ app.controller('TestCtrl', ['$scope', '$http',
 controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserService', 'AuthenticationService',
     function($rootScope, $scope, $http, $location, UserService, AuthenticationService) {
         $scope.login = function(email, password) {
-            console.log("Attempting log in for " + email);
             var credentials = {
                 'email' : email,
                 'password' : password
             };
 
-            var res = UserService.Login(credentials).then(success,failed);
-            return res;
+            return UserService.Login(credentials).then(success,failed);
         }
 
         function success(res) {
@@ -38,7 +36,7 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserServ
         }
     }
 ]).
-controller('UserCtrl', ['$rootScope','$scope',
+controller('UserCtrl', ['$rootScope','$scope', ''
     function($rootScope, $scope) {
         $scope.user = $rootScope.currentUserData;
         function handleAbility(ability) {
@@ -46,12 +44,27 @@ controller('UserCtrl', ['$rootScope','$scope',
         }
     }
 ]).
-controller('Game_SchedCtrl', ['$scope', 
+controller('Game_SchedCtrl', ['$scope',
     function($scope) {
-        
+
+    }
+]).
+controller('Train_SchedCtrl', ['$scope',
+    function($scope) {
+
+    }
+]).
+controller('Med_SchedCtrl', ['$scope', 'MedReqService', 'med_reqs'
+    function($scope, MedReqService, med_reqs) {
+        $scope.med_reqs = med_reqs;
     }
 ]).
 controller('OpsCtrl', ['$scope',
+    function($scope) {
+
+    }
+]).
+controller('PlaysCtrl', ['$scope',
     function($scope) {
 
     }
@@ -63,6 +76,6 @@ controller('TradesCtrl', ['$scope',
 ]).
 controller('ContractsCtrl', ['$scope',
     function($scope) {
-        
+
     }
 ]);
