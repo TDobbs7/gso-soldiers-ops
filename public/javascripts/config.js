@@ -52,28 +52,28 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 good_roles: ["all"]
             }).
             state('home.ops', {
-                url: '/ops',
+                url: '.ops',
                 templateUrl: '/views/ops.html',
                 controller: 'OpsCtrl',
                 require_login: true,
                 good_roles: ["Admin"]
             }).
             state('home.contracts', {
-                url: '/contracts',
+                url: '.contracts',
                 templateUrl: '/views/contracts.html',
                 controller: 'ContractsCtrl',
                 require_login: true,
                 good_roles: ["all"]
             }).
             state('home.game_sched', {
-                url: '/game_sched',
+                url: '.game_sched',
                 templateUrl: '/views/game_sched.html',
                 controller: 'Game_SchedCtrl',
                 require_login: true,
                 good_roles: ["all"]
             }).
             state('home.trades', {
-                url: '/trades',
+                url: '.trades',
                 templateUrl: '/views/trades.html',
                 controller: 'TradesCtrl',
                 require_login: true,

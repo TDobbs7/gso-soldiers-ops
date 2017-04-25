@@ -12,7 +12,6 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
         $rootScope.state = $state.get(state);
     }
 
-    $rootScope.location = $location;
     var s = $location.path().slice(1, $location.path().length + 1);
     $rootScope.changeState(s);
     $rootScope.currentUserData = JSON.parse(window.localStorage.getItem("user"));
