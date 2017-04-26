@@ -39,8 +39,9 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserServ
 controller('UserCtrl', ['$rootScope','$scope',
     function($rootScope, $scope) {
         $scope.user = $rootScope.currentUserData;
-        function handleAbility(ability) {
 
+        function getUserEmail() {
+            return $scope.user.email;
         }
     }
 ]).
@@ -77,5 +78,10 @@ controller('TradesCtrl', ['$scope',
 controller('ContractsCtrl', ['$scope',
     function($scope) {
 
+    }
+]).
+controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs',
+    function($scope, MedReqService, med_reqs) {
+        $scope.med_reqs = med_reqs;
     }
 ]);

@@ -69,6 +69,7 @@ factory('AuthenticationService', ['$rootScope',
 
         function setCurrentUser(res) {
             window.localStorage.setItem("user", JSON.stringify(res.data.user));
+            window.localStorage.setItem("abilities", JSON.stringify(res.data.abilities));
             $rootScope.currentUserData = res.data.user;
             $rootScope.currentUserData.abilities = res.data.abilities;
         }

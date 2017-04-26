@@ -10,11 +10,13 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
 
     $rootScope.changeState = function(state) {
         $rootScope.state = $state.get(state);
+        $state.go($rootScope.state);
     }
 
     var s = $location.path().slice(1, $location.path().length + 1);
     $rootScope.changeState(s);
     $rootScope.currentUserData = JSON.parse(window.localStorage.getItem("user"));
+    $rootScope.currentUserData.abilities = JSON.parse(window.localStorage.getItem("abilities"));
 
     $rootScope.logout = function() {
         $rootScope.currentUserData.last_login = $rootScope.currentUserData.timestamp;
@@ -64,7 +66,7 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
                 $rootScope.changeState('home');
                 $location.path('/' + next_path);
             } else {
-                //$rootScope.changeState(next_path);
+                $rootScope.changeState(next_path.slice(1, next_path.length+1));
                 $location.path(next_path);
             }
         }

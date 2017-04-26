@@ -101,7 +101,25 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 resolve: {
                     MedReqService: "MedReqService",
                     med_reqs: function(MedReqService) {
-                        return MedReqService.GetAllMedReqs();
+                        return MedReqService.GetAllMedReqs().then(function(res) {
+                            return res.data.medical_requests;
+                        }, function(error) {
+                            return error;
+                        });
+                    }
+                }
+            }).
+            state('home.med_reqs', {
+                url: '.med_reqs',
+                templateUrl: '/views/med_reqs.html',
+                controller: 'MedReqsCtrl',
+                require_login: true,
+                good_roles: ["Player", "Coach", "Medic"],
+                resolve: {
+                    MedReqService: 'MedReqService',
+                    UserCtrl: 'UserCtrl',
+                    med_reqs: function(MedReqService, UserCtrl) {
+                        return MedReqService.GetMedReqsByEmail(UserCtrl.getUserEmail());
                     }
                 }
             }).
