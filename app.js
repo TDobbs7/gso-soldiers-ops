@@ -10,7 +10,7 @@ var db; //= monk('mongodb://bisoye:bisoye@ds111771.mlab.com:11771/gso-soldiers')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-//var init = require('./routes/init');
+var init = require('./routes/init');
 var ops = require('./routes/ops');
 var med_reqs = require('./routes/med_reqs');
 var plays = require('./routes/plays');
@@ -28,7 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', '/images/BoroSo Simple.png')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,7 +42,7 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
-//app.use('/init', init);
+app.use('/init', init);
 app.use('/ops', ops);
 app.use('/med_reqs', med_reqs);
 app.use('/playbook', plays);

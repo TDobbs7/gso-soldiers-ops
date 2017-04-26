@@ -63,8 +63,7 @@ router.post('/login', function(req, res, next) {
                 if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});
                 else if (!powers) res.json({"message": "success", "data": {"user": user, "timestamp" : timestamp}});
                 
-                user.abilities = powers.abilities;
-                res.json({"message": "success", "data": {"user" : user, "timestamp" : timestamp}});
+                res.json({"message": "success", "data": {"user" : user, "abilities": powers.abilities, "timestamp" : timestamp}});
             });
     	}
     });
