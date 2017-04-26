@@ -70,13 +70,12 @@ factory('AuthenticationService', ['$rootScope',
         function setCurrentUser(res) {
             window.localStorage.setItem("user", JSON.stringify(res.data.user));
             $rootScope.currentUserData = res.data.user;
+            $rootScope.currentUserData.abilities = res.data.abilities;
         }
         
         function clearCurrentUser() {
             window.localStorage.clear();
             $rootScope.currentUserData = null;
-            $rootScope.requestedPerson = null;
-            $rootScope.requestedUser = null;
         }
 
         function isAuthorized(good_roles) {
@@ -187,4 +186,51 @@ factory('MedReqService', ['$http',
             });
         }
     }
-]);
+])/*.
+factory('AbsService', ['$http',
+    function($http) {
+        var service = {};
+
+        service.GetAllAbs = GetAllAbs;
+        service.GetAbsByClass = GetAbsByClass;
+        service.AddNewAb = AddNewAb;
+        service.UpdateAb = UpdateAb;
+        service.DeleteAb = DeleteAb;
+
+        return service;
+
+        function GetAllAbs() {
+            return $http.get('/abilities').then(handleSuccess, handleError);
+        }
+
+        function GetAbsByClass(user_class) {
+            return $http.get('/abilities/' + user_class).then(handleSuccess, handleError);
+        }
+
+        function AddNewAb(ability) {
+            return $http.post('/abilities', ability).then(handleSuccess, handleError);
+        }
+
+        function UpdateAb(ability) {
+            return $http.put('/abilities/' + ability.class, ability).then(handleSuccess, handleError);
+        }
+
+        function DeleteAb(ability) {
+            return $http.delete('/abilities/' + ability.class, ability).then(handleSuccess, handleError);
+        }
+
+        // private functions
+
+        function handleSuccess(res) {
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
+        }
+
+        function handleError(error) {
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
+        }
+    }
+])*/;

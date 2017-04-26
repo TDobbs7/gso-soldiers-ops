@@ -57,7 +57,7 @@ router.post('/login', function(req, res, next) {
 
             var abs_coll = db.collection('abilities');
 
-            abs_coll.findOne({'role': user.role.class}, {}, function(err, powers) {
+            abs_coll.findOne({'class': user.role.class}, {}, function(err, powers) {
                 var timestamp = new Date(new Date().getTime()).toLocaleString();
 
                 if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});

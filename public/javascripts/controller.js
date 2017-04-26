@@ -36,7 +36,7 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserServ
         }
     }
 ]).
-controller('UserCtrl', ['$rootScope','$scope', ''
+controller('UserCtrl', ['$rootScope','$scope',
     function($rootScope, $scope) {
         $scope.user = $rootScope.currentUserData;
         function handleAbility(ability) {
@@ -54,7 +54,7 @@ controller('Train_SchedCtrl', ['$scope',
 
     }
 ]).
-controller('Med_SchedCtrl', ['$scope', 'MedReqService', 'med_reqs'
+controller('Med_SchedCtrl', ['$scope', 'MedReqService', 'med_reqs',
     function($scope, MedReqService, med_reqs) {
         $scope.med_reqs = med_reqs;
     }

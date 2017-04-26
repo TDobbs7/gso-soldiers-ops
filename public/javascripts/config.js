@@ -64,7 +64,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 require_login: true,
                 good_roles: ["Admin"]
             }).
-            state('home.contract', {
+            state('home.contracts', {
                 url: '.contracts',
                 templateUrl: '/views/contracts.html',
                 controller: 'ContractsCtrl',

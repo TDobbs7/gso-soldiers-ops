@@ -382,40 +382,16 @@ router.put('/abilities', function(req, res, next) {
         if (err) return next(err);
 
         users.forEach(function(user) {
-            var abilities = [
-                {
-                    "name": "View Contract Offer",
-                    "state": "home.contract",
-                    "link": "/contracts"
-                },
-                {
-                    "name": "View Medical Schedule",
-                    "state": "home.med_sched",
-                    "link": "/med_sched"
-                },
-                {
-                    "name": "View Game Schedule",
-                    "state": "home.game_sched",
-                    "link": "/game_sched"
-                },
-                {
-                    "name": "View Training Schedule",
-                    "state": "home.train_sched",
-                    "link": "/train_sched"
-                },
-                {
-                    "name": "View Playbook",
-                    "state": "home.plays",
-                    "link": "/plays"
-                }
-            ];
-            user_coll.update(user, {$set: {"abilities" : abilities}}, function(err, up) {
-                if (err) {
-                    console.log("single bleh");
-                    console.err(err);
-                }
-                else console.log(up);
-            });
+            if (user.abilities) {
+                delete user.abilities;
+                user_coll.update({"email": user.email}, user, function(err, up) {
+                    if (err) {
+                        console.log("single bleh");
+                        console.error(err);
+                    }
+                    else console.log(up);
+                });
+            }
         });
 
         res.json({"success": true});
