@@ -9,9 +9,7 @@ Run the set up files for Node JS and MongoDB and update your environment variabl
 #Important commands to know:
 
 #npm start
-This is how the server that hosts our web app starts running. 
+This is how the server that hosts our web app starts running. You'll run this in the folder where "app.js" is located
 
-#mongod --dbpath data/db
-This is how the server that hosts the database is run. "data/db" are real folders within your project that will save your database documents.
-
-#How To CRUD (Create, Read, Update, Delete)
+Email: huntervick@gso.org
+Password: pass
