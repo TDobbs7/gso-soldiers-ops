@@ -1,38 +1,5 @@
 var app = angular.module('gso-soldiers-ops');
 
-/*app.config(['$routeProvider',
-    function($routeProvider) {
-        $routeProvider.
-            //General user routes
-            when('/', {
-                templateUrl: '/views/login.html',
-                controller: 'LoginCtrl',
-                require_login: false
-            }).
-            when('/test', {
-                templateUrl: '/views/test/test.html',
-                controller: 'TestCtrl',
-                require_login: false
-            }).
-            when('/home', {
-                templateUrl: '/views/home.html',
-                controller: 'UserCtrl',
-                require_login: true,
-                good_roles: ["all"]
-            }).
-            //admin routes
-            when('/admin/game_sched', {
-                templateUrl: '/views/admin-game_sched',
-                controller: 'Game_SchedCtrl',
-                require_login: true,
-                good_roles: ["Admin"]
-            }).
-            otherwise({
-                redirectTo: '/'
-            });
-    }
-]);*/
-
 app.config(['$stateProvider', '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('login');
@@ -102,7 +69,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                     MedReqService: "MedReqService",
                     med_reqs: function(MedReqService) {
                         return MedReqService.GetAllMedReqs().then(function(res) {
-                            return res.data.medical_requests;
+                            return res.data.medical_reqs;
                         }, function(error) {
                             return error;
                         });
@@ -119,7 +86,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
                     MedReqService: 'MedReqService',
                     UserCtrl: 'UserCtrl',
                     med_reqs: function(MedReqService, UserCtrl) {
-                        return MedReqService.GetMedReqsByEmail(UserCtrl.getUserEmail());
+                        return MedReqService.GetMedReqsByEmail(UserCtrl.getUserEmail()).then(function(res) {
+                            return res.data.medical_reqs;
+                        }, function(error) {
+                            return error;
+                        });
                     }
                 }
             }).

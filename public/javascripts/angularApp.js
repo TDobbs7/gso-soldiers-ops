@@ -47,6 +47,7 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
         var next_path = $location.path();
         //var next_route = $route.routes[next_path];
+        var state = $state.get(next_path.slice(1, next_path.length+1));
 
         if (next_path == '/login' && AuthenticationService.isAuthenticated()) {
             event.preventDefault();
@@ -54,19 +55,19 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
             $location.path('/home');
         }
 
-        if ($state.current.require_login) {
+        if (state.require_login) {
             if(!AuthenticationService.isAuthenticated()) {
                 $rootScope.stopAndReport({'message' : "You must be logged in first"});
                 $rootScope.changeState('login');
                 $location.path('/login');
             }
-            else if (!AuthenticationService.isAuthorized($state.current.good_roles)) {
+            else if (!AuthenticationService.isAuthorized(state.good_roles)) {
                 $rootScope.stopAndReport({'message' : "You are not authorized to view this page : " + $rootScope.currentUserData.user.role.class + ", " + $rootScope.currentUserData.user.role.position});
 
                 $rootScope.changeState('home');
                 $location.path('/' + next_path);
             } else {
-                $rootScope.changeState(next_path.slice(1, next_path.length+1));
+                $rootScope.changeState(state);
                 $location.path(next_path);
             }
         }
