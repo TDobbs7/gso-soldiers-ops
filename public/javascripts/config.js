@@ -86,7 +86,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                     MedReqService: 'MedReqService',
                     UserCtrl: 'UserCtrl',
                     med_reqs: function(MedReqService, UserCtrl) {
-                        return MedReqService.GetMedReqsByEmail(UserCtrl.getUserEmail()).then(function(res) {
+                        return MedReqService.GetAllMedReqs().then(function(res) {
                             return res.data.medical_reqs;
                         }, function(error) {
                             return error;

@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var monk = require('monk');
 var mongo = require('mongodb').MongoClient;
+var mLab = require('mongolab-data-api')('-6BLNcs9MM2_A-UWPH2cTXvNJYnzHDfm');
+
 var db; //= monk('mongodb://bisoye:bisoye@ds111771.mlab.com:11771/gso-soldiers');
 
 var index = require('./routes/index');
@@ -17,12 +19,21 @@ var plays = require('./routes/plays');
 
 var app = express();
 
-
+mLab.listDatabases(function (err, data) {
+    if (err) { console.log(err); }
+    else {
+        console.log(data); // => [db1, db2, db3, ...]
+    }
+});
+mLab.listCollections('gso-soldiers', function (err, collections) {
+  console.log(collections); // => [coll1, coll2, ...]
+});
 mongo.connect('mongodb://bisoye:bisoye@ds111771.mlab.com:11771/gso-soldiers', (err, database) => {
     if (err) return console.log(err)
     db = database
     console.log("Connected");
 });
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
