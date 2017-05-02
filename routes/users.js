@@ -27,12 +27,12 @@ router.get('/email/:email', function(req, res, next) {
 router.get('/role/:role', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
-    var role = req.params.email;
+    var role = req.params.role;
 
-    user_coll.findOne({'email': email}, function(err, user) {
-        if (err) res.status(500).json({"message": "Error finding user (" + email + ")\n" + err});
-        else if (!user) res.status(404).json({"message": "User ("  + email + ") not found"});
-        else res.json({"message": "success", "data" : {"user": user}});
+    user_coll.find({'role.class': role}).toArray(function(err, users) {
+        if (err) res.status(500).json({"message": "Error finding users (" + role + ")\n" + err});
+        else if (!users) res.status(404).json({"message": "Users ("  + role + ") not found"});
+        else res.json({"message": "success", "data" : {"users": users}});
     });
 });
 

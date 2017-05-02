@@ -49,14 +49,21 @@ router.post('/', function(req, res, next) {
     });
 });
 
-router.put('/', function(req, res, next) {
+router.put('/:name', function(req, res, next) {
     var db = req.db;
     var play_coll = db.collection('playbook');
+    var name = req.params.name;
     var upd_play = req.body;
 
-    play_coll.update({"name": upd_play.name}, {$set: {upd_play}}, function(err) {
-        if (err) res.status(500).json({"message": "Error updating play (" + upd_play.name + ")\n" + err});
-        else res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
+    play_coll.findOne({'name': name}, {}, function(err, play) {
+        if (err) res.status(500).json({"message": "Error finding play (" + name + ")\n" + err});
+        else if (!play) res.status(404).json({"message": "Play (" + name + ") not found"});
+        else {
+            play_coll.replaceOne(play, upd_play, function(err) {
+                if (err) res.status(500).json({"message": "Error updating play (" + play + ")\n" + err});
+                else res.json({"message": "success", "data": {"timestamp" : new Date(new Date().getTime()).toUTCString()}});
+            });
+        }
     });
 });
 

@@ -29,7 +29,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/ops.html',
                 controller: 'OpsCtrl',
                 require_login: true,
-                good_roles: ["Admin"]
+                good_roles: ["Admin"],
+                resolve: {
+                    OpsService: "OpsService",
+                    ops: function(OpsService) {
+                        return OpsService.GetAllOps().then(function(res) {
+                            return res.data.ops;
+                        }, function(error) {
+                            return error;
+                        });
+                    }
+                }
             }).
             state('home.contracts', {
                 url: '.contracts',
@@ -43,7 +53,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/plays.html',
                 controller: 'PlaysCtrl',
                 require_login: true,
-                good_roles: ["all"]
+                good_roles: ["Coach", "Player"]
             }).
             state('home.game_sched', {
                 url: '.game_sched',
