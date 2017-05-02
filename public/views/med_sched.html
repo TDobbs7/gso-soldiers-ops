@@ -1,7 +1,7 @@
-<div class="container" data-ng-if="currentUserData.role.class === 'Medic'">
+<div class="container" data-ng-if="currentUserData.role.class !== 'Player'">
   {{user.email}}
   <div class="container">
-  	<h3><small>Medical Requests</small></h3>
+  	<h3><small>Medical Schedule</small></h3>
   	<table>
     <tr>
       <th>Player</th>
