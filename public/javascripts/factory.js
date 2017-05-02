@@ -64,18 +64,18 @@ factory('AuthenticationService', ['$rootScope',
         return service;
 
         function isAuthenticated() {
-            return ($rootScope.currentUserData !== null);
+            return (typeof $rootScope.currentUserData !== 'undefined' && $rootScope.currentUserData !== null);
         }
 
         function setCurrentUser(res) {
-            window.localStorage.setItem("user", JSON.stringify(res.data.user));
-            window.localStorage.setItem("abilities", JSON.stringify(res.data.abilities));
+            window.sessionStorage.setItem("user", JSON.stringify(res.data.user));
+            window.sessionStorage.setItem("abilities", JSON.stringify(res.data.abilities));
             $rootScope.currentUserData = res.data.user;
             $rootScope.currentUserData.abilities = res.data.abilities;
         }
         
         function clearCurrentUser() {
-            window.localStorage.clear();
+            window.sessionStorage.clear();
             $rootScope.currentUserData = null;
         }
 

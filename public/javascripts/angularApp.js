@@ -15,8 +15,11 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
 
     var s = $location.path().slice(1, $location.path().length + 1);
     $rootScope.changeState(s);
-    $rootScope.currentUserData = JSON.parse(window.localStorage.getItem("user"));
-    $rootScope.currentUserData.abilities = JSON.parse(window.localStorage.getItem("abilities"));
+    
+    if (window.sessionStorage.getItem("user") != null && window.sessionStorage.getItem("abiltiies") != null) {
+        $rootScope.currentUserData = JSON.parse(window.sessionStorage.getItem("user"));
+        $rootScope.currentUserData.abilities = JSON.parse(window.sessionStorage.getItem("abilities"));
+    }
 
     $rootScope.logout = function() {
         $rootScope.currentUserData.last_login = $rootScope.currentUserData.timestamp;
