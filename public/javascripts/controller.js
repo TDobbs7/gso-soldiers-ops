@@ -83,6 +83,20 @@ controller('ContractsCtrl', ['$scope',
 controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs',
     function($scope, MedReqService, med_reqs) {
         $scope.med_reqs = med_reqs;
+
+        $scope.makeRequest = function() {
+            return MedReqService.AddNewMedReq(/*medical req*/).then(success, failed);
+        }
+
+        function success(res) {
+            AuthenticationService.setCurrentUser(res.data);
+            $rootScope.changeState('home');
+            $location.path('/home');
+        }
+
+        function failed(res) {
+            $rootScope.stopAndReport(res.data);
+        }
     }
 ]).
 controller('MedRepsCtrl', ['$scope',
