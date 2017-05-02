@@ -68,7 +68,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 resolve: {
                     MedReqService: "MedReqService",
                     med_reqs: function(MedReqService) {
-                        return MedReqService.GetAllMedReqs().then(function(res) {
+                        return MedReqService.GetMyMedReqs().then(function(res) {
                             return res.data.medical_reqs;
                         }, function(error) {
                             return error;

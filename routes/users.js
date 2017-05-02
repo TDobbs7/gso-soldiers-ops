@@ -12,10 +12,22 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/:email', function(req, res, next) {
+router.get('/email/:email', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
     var email = req.params.email;
+
+    user_coll.findOne({'email': email}, function(err, user) {
+        if (err) res.status(500).json({"message": "Error finding user (" + email + ")\n" + err});
+        else if (!user) res.status(404).json({"message": "User ("  + email + ") not found"});
+        else res.json({"message": "success", "data" : {"user": user}});
+    });
+});
+
+router.get('/role/:role', function(req, res, next) {
+    var db = req.db;
+    var user_coll = db.collection('users');
+    var role = req.params.email;
 
     user_coll.findOne({'email': email}, function(err, user) {
         if (err) res.status(500).json({"message": "Error finding user (" + email + ")\n" + err});
