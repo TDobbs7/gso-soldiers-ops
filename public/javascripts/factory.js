@@ -150,7 +150,6 @@ factory('MedReqService', ['$http', '$rootScope',
         service.AddNewMedReq = AddNewMedReq;
         service.UpdateMedReq = UpdateMedReq;
         service.DeleteMedReq = DeleteMedReq;
-        service.email = $rootScope.currentUserData.email;
 
         return service;
 
@@ -159,7 +158,7 @@ factory('MedReqService', ['$http', '$rootScope',
         }
 
         function GetMyMedReqs() {
-            return $http.get('/med_reqs/' + service.email).then(handleSuccess, handleError);
+            return $http.get('/med_reqs/' + $rootScope.currentUserData.email).then(handleSuccess, handleError);
         }
 
         function AddNewMedReq(med_req) {
