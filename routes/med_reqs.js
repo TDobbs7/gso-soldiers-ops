@@ -18,7 +18,14 @@ router.get('/:email', function(req, res, next) {
     var med_coll = db.collection('medical_req');
     var email = req.params.email;
 
-    med_coll.find({$or:[{'staff': email}, {'player': email}]}).toArray(function(err, med_reqs) {
+    var query = {
+        $or: [
+            {"player": email},
+            {"staff": email}
+        ]
+    };
+
+    med_coll.find(query).toArray(function(err, med_reqs) {
     	if (err) res.status(500).json({"message": "Error getting medical requests (" + email + ")\n" + err});
 		else res.json({"medical_reqs": med_reqs});
     });

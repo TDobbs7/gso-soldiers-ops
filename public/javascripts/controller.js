@@ -84,4 +84,9 @@ controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs',
     function($scope, MedReqService, med_reqs) {
         $scope.med_reqs = med_reqs;
     }
+]).
+controller('MedRepsCtrl', ['$scope',
+    function($scope) {
+        
+    }
 ]);

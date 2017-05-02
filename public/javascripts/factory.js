@@ -141,15 +141,16 @@ factory('OpsService', ['$http',
         }
     }
 ]).
-factory('MedReqService', ['$http',
-    function($http) {
+factory('MedReqService', ['$http', '$rootScope',
+    function($http, $rootScope) {
         var service = {};
 
         service.GetAllMedReqs = GetAllMedReqs;
-        service.GetMedReqsByEmail = GetMedReqsByEmail;
+        service.GetMyMedReqs = GetMyMedReqs;
         service.AddNewMedReq = AddNewMedReq;
         service.UpdateMedReq = UpdateMedReq;
         service.DeleteMedReq = DeleteMedReq;
+        service.email = $rootScope.currentUserData.email;
 
         return service;
 
@@ -157,8 +158,8 @@ factory('MedReqService', ['$http',
             return $http.get('/med_reqs').then(handleSuccess, handleError);
         }
 
-        function GetMedReqsByEmail(email) {
-            return $http.get('/med_reqs/' + email).then(handleSuccess, handleError);
+        function GetMyMedReqs() {
+            return $http.get('/med_reqs/' + service.email).then(handleSuccess, handleError);
         }
 
         function AddNewMedReq(med_req) {

@@ -84,15 +84,21 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 good_roles: ["Player", "Coach", "Medic"],
                 resolve: {
                     MedReqService: 'MedReqService',
-                    UserCtrl: 'UserCtrl',
-                    med_reqs: function(MedReqService, UserCtrl) {
-                        return MedReqService.GetAllMedReqs().then(function(res) {
+                    med_reqs: function(MedReqService) {
+                        return MedReqService.GetMyMedReqs().then(function(res) {
                             return res.data.medical_reqs;
                         }, function(error) {
                             return error;
                         });
                     }
                 }
+            }).
+            state('home.med_rep', {
+                url: '.med_rep',
+                templateUrl: '/views/med_rep.html',
+                controller: 'MedRepsCtrl',
+                require_login: true,
+                good_roles: ["Medic"]
             }).
             state('home.trades', {
                 url: '.trades',
