@@ -1,7 +1,5 @@
 <div class="container">
-<<<<<<< HEAD
-	<p>Medical Requests would be here</p>
-	{{med_reqs}}
+
 </div><div class="container" data-ng-if="currentUserData.role.class === 'Admin'">
 	<!-- <embed src="/docs/Greensboro Basketball Association Performance Contract Saved.docx" type=></embed> -->
 	<iframe src="/docs/Greensboro Basketball Association Performance Contract Saved.htm" width="100%" height="400px"></iframe>
@@ -10,13 +8,11 @@
 
 
 <form action="/IDFK()">
-  <small>Select Your Medical Staff:</small>
-	<br><br>
+  <h3><small>Select Your Medical Staff:</small></h3>
 	<select>
 		<option ng-repeat="x in med_reqs">{{x.staff}}</option>
 	</select>
-	<br><br>
-	<medium>Whats wrong?</medium><input type="text" name="issue">
+	<h3><small>Whats wrong?</small></h3><input type="text" name="issue" size"150">
   <br><br>
   <input type="submit">
 </form>
