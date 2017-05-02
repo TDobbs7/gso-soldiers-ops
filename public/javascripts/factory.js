@@ -158,6 +158,9 @@ factory('MedReqService', ['$http', '$rootScope',
         }
 
         function GetMyMedReqs() {
+            var user = $rootScope.currentUserData;
+            if (user.role.class === "Admin" || user.role.class === "Medic") return GetAllMedReqs();
+            
             return $http.get('/med_reqs/' + $rootScope.currentUserData.email).then(handleSuccess, handleError);
         }
 

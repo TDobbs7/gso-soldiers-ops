@@ -27,7 +27,7 @@ router.get('/email/:email', function(req, res, next) {
 router.get('/role/:role', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
-    var email = req.params.email;
+    var role = req.params.email;
 
     user_coll.findOne({'email': email}, function(err, user) {
         if (err) res.status(500).json({"message": "Error finding user (" + email + ")\n" + err});
