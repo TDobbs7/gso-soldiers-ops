@@ -11,7 +11,7 @@
     <th>Staff</th>
     <th>Check</th>
   </tr>
-  <tr data-ng-repeat="case in med_reqs" >
+  <tr data-ng-repeat="case in med_reqs" ng-if="case.player=='{{user.email}}'" >
     <td>{{case.player}}</td>
     <td>{{case.staff}}</td>
     <td>{{case.request}}</td>

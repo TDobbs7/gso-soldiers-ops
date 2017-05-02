@@ -1,32 +1,23 @@
 <div class="container">
-  {{user.email}}
-  <div class="container">
-  	<h3><small>Medical Requests</small></h3>
-  	<table>
-    <tr>
-      <th>Player</th>
-      <th>Staff</th>
-      <th>Check</th>
-    </tr>
-    <tr data-ng-repeat="case in med_reqs" >
-      <td>{{case.player}}</td>
-      <td>{{case.staff}}</td>
-      <td>{{case.request}}</td>
-    </tr>
-  </table>
-  </div>
-
-  <style>
-  table, th , td {
-    border: 3px solid grey;
-    border-collapse: collapse;
-    padding: 15px;
-  }
-  table tr:nth-child(odd) {
-    background-color: #f1f1f1;
-  }
-  table tr:nth-child(even) {
-    background-color: #ffffff;
-  }
-  </style>
+	<p>Medical Requests would be here</p>
+	{{med_reqs}}
+</div><div class="container" data-ng-if="currentUserData.role.class === 'Admin'">
+	<!-- <embed src="/docs/Greensboro Basketball Association Performance Contract Saved.docx" type=></embed> -->
+	<iframe src="/docs/Greensboro Basketball Association Performance Contract Saved.htm" width="100%" height="400px"></iframe>
 </div>
+
+
+
+
+
+<form action="/IDFK()">
+  <small>Select Your Medical Staff:</small>
+	<br><br>
+	<select>
+		<option ng-repeat="x in med_reqs">{{x.staff}}</option>
+	</select>
+	<br><br>
+	<medium>Whats wrong?</medium><input type="text" name="issue">
+  <br><br>
+  <input type="submit">
+</form>

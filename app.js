@@ -18,7 +18,15 @@ var med_reqs = require('./routes/med_reqs');
 var plays = require('./routes/plays');
 
 var app = express();
+app.use(bodyParser.urlencoded({extended: true}))
+app.post('/quotes', (req, res) => {
+  db.collection('quotes').save(req.body, (err, result) => {
+    if (err) return console.log(err)
 
+    console.log('saved to database')
+    //res.redirect('/')
+  })
+})
 mLab.listDatabases(function (err, data) {
     if (err) { console.log(err); }
     else {
