@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 /* GET medical requests listing. */
-router.get('/', function(req, res, next) { 
+router.get('/', function(req, res, next) {
     var db = req.db;
     var med_coll = db.collection('medical_req');
 

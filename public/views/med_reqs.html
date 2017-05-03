@@ -1,11 +1,20 @@
-<div class="container">
+<div class="container" data-ng-if="user.role.class === 'Player' || user.role.class === 'Coach'">
 
-<form action="/IDFK()">
-  <h3><small>Select Your Medical Staff:</small></h3>
-	<select>
-		<option ng-repeat="staff in med_staff">{{staff.fname}} {{staff.lname}}: {{staff.role.position}} ({{staff.email}})</option>
-	</select>
-	<h3><small>Whats wrong?</small></h3><input type="text" name="issue" size"150">
-  <br><br>
-  <input type="submit">
-</form>
+	<form action="/IDFK()">
+		<div data-ng-if="user.role.class === 'Coach'">
+			<h3><small>Select Your Player:</small></h3>
+			<select>
+				<option ng-repeat="player in players">{{player.lname}}, {{player.fname}}: {{player.role.position}} ({{player.email}})</option>
+			</select>
+		</div>
+
+		<h3><small>Select Your Medical Staff:</small></h3>
+		<select>
+			<option ng-repeat="staff in med_staff">{{staff.lname}}, {{staff.fname}}: {{staff.role.position}} ({{staff.email}})</option>
+		</select>
+		<h3><small>Whats wrong?</small></h3><input type="text" name="issue" size"150">
+	  	<br><br>
+	  	
+	  	<input type="submit">
+	</form>
+</div>

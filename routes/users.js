@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
 
-    user_coll.find({}).toArray(function(err, users) {
+    user_coll.find({}).sort({'lname' : 1}).toArray(function(err, users) {
     	if (err) res.status(500).json({"message": "Error getting users\n" + err});
 		else res.json({"message": "success", "data": {"users": users}});
     });
@@ -29,7 +29,7 @@ router.get('/role/:role', function(req, res, next) {
     var user_coll = db.collection('users');
     var role = req.params.role;
 
-    user_coll.find({'role.class': role}).toArray(function(err, users) {
+    user_coll.find({'role.class': role}).sort({'lname' : 1}).toArray(function(err, users) {
         if (err) res.status(500).json({"message": "Error finding users (" + role + ")\n" + err});
         else if (!users) res.status(404).json({"message": "Users ("  + role + ") not found"});
         else res.json({"message": "success", "data" : {"users": users}});

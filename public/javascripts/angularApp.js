@@ -13,14 +13,6 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
         $state.go($rootScope.state);
     }
 
-    var s = $location.path().slice(1, $location.path().length + 1);
-    $rootScope.changeState(s);
-    
-    if (window.sessionStorage.getItem("user") != null && window.sessionStorage.getItem("abiltiies") != null) {
-        $rootScope.currentUserData = JSON.parse(window.sessionStorage.getItem("user"));
-        $rootScope.currentUserData.abilities = JSON.parse(window.sessionStorage.getItem("abilities"));
-    }
-
     $rootScope.logout = function() {
         $rootScope.currentUserData.last_login = $rootScope.currentUserData.timestamp;
         UserService.UpdateUser($rootScope.currentUserData).then(function(res) {
@@ -48,33 +40,45 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
     };
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
-        var next_path = $location.path();
-        //var next_route = $route.routes[next_path];
-        var state = $state.get(next_path.slice(1, next_path.length+1));
+        if($location.path() !== "") {
+            var next_path = $location.path();
+            //var next_route = $route.routes[next_path];
+            var state = $state.get(next_path.slice(1, next_path.length+1));
 
-        if (next_path == '/login' && AuthenticationService.isAuthenticated()) {
-            event.preventDefault();
-            $rootScope.changeState('home');
-            $location.path('/home');
-        }
-
-        if (state.require_login) {
-            if(!AuthenticationService.isAuthenticated()) {
-                $rootScope.stopAndReport({'message' : "You must be logged in first"});
-                $rootScope.changeState('login');
-                $location.path('/login');
-            }
-            else if (!AuthenticationService.isAuthorized(state.good_roles)) {
-                $rootScope.stopAndReport({'message' : "You are not authorized to view this page : " + $rootScope.currentUserData.user.role.class + ", " + $rootScope.currentUserData.user.role.position});
-
+            if (next_path == '/login' && AuthenticationService.isAuthenticated()) {
+                event.preventDefault();
                 $rootScope.changeState('home');
-                $location.path('/' + next_path);
-            } else {
-                $rootScope.changeState(state);
-                $location.path(next_path);
+                $location.path('/home');
+            }
+
+            if (state.require_login) {
+                if(!AuthenticationService.isAuthenticated()) {
+                    $rootScope.stopAndReport({'message' : "You must be logged in first"});
+                    $rootScope.changeState('login');
+                    $location.path('/login');
+                }
+                else if (!AuthenticationService.isAuthorized(state.good_roles)) {
+                    $rootScope.stopAndReport({'message' : "You are not authorized to view this page : " + $rootScope.currentUserData.role.class + ", " + $rootScope.currentUserData.role.position});
+
+                    $rootScope.changeState('home');
+                    $location.path('/' +next_path);
+                } else {
+                    $rootScope.changeState(state);
+                    $location.path(next_path);
+                }
             }
         }
-
-       //$state.reload();
     });
+
+    var s = "";
+
+    if ($location.path() !== "") s = $location.path().slice(1, $location.path().length + 1);
+    else s = "login"; 
+    
+    $rootScope.changeState(s);
+    
+    if (window.sessionStorage.getItem("user") != null && window.sessionStorage.getItem("abiltiies") != null) {
+        $rootScope.currentUserData = JSON.parse(window.sessionStorage.getItem("user"));
+        $rootScope.currentUserData.abilities = JSON.parse(window.sessionStorage.getItem("abilities"));
+    }
 });

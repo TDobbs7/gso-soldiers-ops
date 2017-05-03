@@ -108,6 +108,13 @@ app.config(['$stateProvider', '$urlRouterProvider',
                         }, function(error) {
                             return error;
                         });
+                    },
+                    players: function(UserService) {
+                        return UserService.GetByRole('Player').then(function(res) {
+                            return res.data.data.users;
+                        }, function(error) {
+                            return error;
+                        });
                     }
                 }
             }).
