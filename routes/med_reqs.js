@@ -17,7 +17,6 @@ router.get('/:email', function(req, res, next) {
     var db = req.db;
     var med_coll = db.collection('medical_req');
     var email = req.params.email;
-    console.log(email);
 
     var query = {
         $or: [

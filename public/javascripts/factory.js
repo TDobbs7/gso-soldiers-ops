@@ -6,6 +6,7 @@ app.factory('UserService', ['$http', 'OpsService',
 
         service.GetAllUsers = GetAllUsers;
         service.GetByEmail = GetByEmail;
+        service.GetByRole = GetByRole;
         service.AddNewUser = AddNewUser;
         service.UpdateUser = UpdateUser;
         service.DeleteUser = DeleteUser;
@@ -18,7 +19,11 @@ app.factory('UserService', ['$http', 'OpsService',
         }
 
         function GetByEmail(email) {
-            return $http.get('/users/' + email).then(handleSuccess, handleError);
+            return $http.get('/users/email/' + email).then(handleSuccess, handleError);
+        }
+
+        function GetByRole(role) {
+            return $http.get('/users/role/' + role).then(handleSuccess, handleError);
         }
 
         function AddNewUser(user) {
@@ -158,6 +163,9 @@ factory('MedReqService', ['$http', '$rootScope',
         }
 
         function GetMyMedReqs() {
+            var user = $rootScope.currentUserData;
+            if (user.role.class === "Admin" || user.role.class === "Medic") return GetAllMedReqs();
+            
             return $http.get('/med_reqs/' + $rootScope.currentUserData.email).then(handleSuccess, handleError);
         }
 
@@ -187,51 +195,4 @@ factory('MedReqService', ['$http', '$rootScope',
             });
         }
     }
-])/*.
-factory('AbsService', ['$http',
-    function($http) {
-        var service = {};
-
-        service.GetAllAbs = GetAllAbs;
-        service.GetAbsByClass = GetAbsByClass;
-        service.AddNewAb = AddNewAb;
-        service.UpdateAb = UpdateAb;
-        service.DeleteAb = DeleteAb;
-
-        return service;
-
-        function GetAllAbs() {
-            return $http.get('/abilities').then(handleSuccess, handleError);
-        }
-
-        function GetAbsByClass(user_class) {
-            return $http.get('/abilities/' + user_class).then(handleSuccess, handleError);
-        }
-
-        function AddNewAb(ability) {
-            return $http.post('/abilities', ability).then(handleSuccess, handleError);
-        }
-
-        function UpdateAb(ability) {
-            return $http.put('/abilities/' + ability.class, ability).then(handleSuccess, handleError);
-        }
-
-        function DeleteAb(ability) {
-            return $http.delete('/abilities/' + ability.class, ability).then(handleSuccess, handleError);
-        }
-
-        // private functions
-
-        function handleSuccess(res) {
-            return new Promise(function(resolve, reject) {
-                resolve({"data" : res.data});
-            });
-        }
-
-        function handleError(error) {
-            return new Promise(function(resolve, reject) {
-                reject(error);
-            });
-        }
-    }
-])*/;
+]);
