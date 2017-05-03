@@ -80,9 +80,10 @@ controller('ContractsCtrl', ['$scope',
 
     }
 ]).
-controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs',
-    function($scope, MedReqService, med_reqs) {
+controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs', 'med_staff',
+    function($scope, MedReqService, med_reqs, med_staff) {
         $scope.med_reqs = med_reqs;
+        $scope.med_staff = med_staff;
 
         $scope.makeRequest = function() {
             return MedReqService.AddNewMedReq(/*medical req*/).then(success, failed);

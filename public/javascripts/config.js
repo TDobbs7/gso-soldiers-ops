@@ -94,9 +94,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 good_roles: ["Player", "Coach", "Medic"],
                 resolve: {
                     MedReqService: 'MedReqService',
+                    UserService: 'UserService',
                     med_reqs: function(MedReqService) {
                         return MedReqService.GetMyMedReqs().then(function(res) {
                             return res.data.medical_reqs;
+                        }, function(error) {
+                            return error;
+                        });
+                    },
+                    med_staff: function(UserService) {
+                        return UserService.GetByRole('Medic').then(function(res) {
+                            return res.data.data.users;
                         }, function(error) {
                             return error;
                         });
