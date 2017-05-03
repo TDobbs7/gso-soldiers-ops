@@ -37,8 +37,8 @@ mLab.listCollections('gso-soldiers', function (err, collections) {
   console.log(collections); // => [coll1, coll2, ...]
 });
 mongo.connect('mongodb://bisoye:bisoye@ds111771.mlab.com:11771/gso-soldiers', (err, database) => {
-    if (err) return console.log(err)
-    db = database
+    if (err) return console.log(err);
+    db = database;
     console.log("Connected");
 });
 
