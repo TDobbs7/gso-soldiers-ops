@@ -2,7 +2,7 @@
   {{user.email}}
   <div class="container">
   	<h3><small>Medical Schedule</small></h3>
-  	<table>
+  	<table class="table">
     <tr>
       <th>Player</th>
       <th>Staff</th>
@@ -12,6 +12,9 @@
       <td>{{case.player}}</td>
       <td>{{case.staff}}</td>
       <td>{{case.request}}</td>
+			<td>
+				<input type="button" value="Resolved" class="btn btn-primary" ng-click="removeIssue(case._id)"/>
+			</td>
     </tr>
   </table>
   </div>
