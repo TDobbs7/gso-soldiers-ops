@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongodb = require('mongodb');
 
 /* GET medical requests listing. */
 router.get('/', function(req, res, next) {
@@ -58,7 +59,7 @@ router.delete('/:_id', function(req, res, next) {
     var med_coll = db.collection('medical_req');
     var _id = req.params._id;
 
-    med_coll.remove({"_id": _id}, function(err, del) {
+    med_coll.remove({"_id": new mongodb.ObjectID(_id)}, function(err, del) {
         if (err) res.status(500).json({"message": "Error deleting medical request (" + _id + ")\n" + err});
         else res.json({"message": "success"});
     });

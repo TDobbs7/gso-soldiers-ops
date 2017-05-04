@@ -85,11 +85,6 @@ controller('PlaysCtrl', ['$scope',
 
     }
 ]).
-controller('TradesCtrl', ['$scope',
-    function($scope) {
-
-    }
-]).
 controller('ContractsCtrl', ['$scope', 'ContractsService', 'contracts',
     function($scope, ContractsService, contracts) {
         $scope.contracts = contracts;
@@ -112,6 +107,7 @@ controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', '
 
             return MedReqService.AddNewMedReq(credentials).then(success,failed);
           }
+          
           function success(res) {
               //AuthenticationService.setCurrentUser(res.data);
               alert("Your request has been posted!");
@@ -122,10 +118,5 @@ controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', '
         function failed(res) {
             $rootScope.stopAndReport(res.data);
         }
-    }
-]).
-controller('MedRepsCtrl', ['$scope',
-    function($scope) {
-
     }
 ]);
