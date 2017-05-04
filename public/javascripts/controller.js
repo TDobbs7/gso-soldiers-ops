@@ -60,9 +60,15 @@ controller('Med_SchedCtrl', ['$scope', 'MedReqService', 'med_reqs',
         $scope.med_reqs = med_reqs;
     }
 ]).
-controller('OpsCtrl', ['$scope',
-    function($scope) {
+controller('OpsCtrl', ['$scope', 'OpsService', 'ops',
+    function($scope, OpsService, ops) {
+        $scope.ops = ops;
 
+        $scope.filterByType = function(type) {
+
+        }
+
+        $scope.
     }
 ]).
 controller('PlaysCtrl', ['$scope',
@@ -83,6 +89,7 @@ controller('ContractsCtrl', ['$scope',
 controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs',
     function($scope, MedReqService, med_reqs) {
         $scope.med_reqs = med_reqs;
+        //$scope.allMedicStaff
 
         $scope.makeRequest = function() {
             return MedReqService.AddNewMedReq(/*medical req*/).then(success, failed);
