@@ -199,6 +199,7 @@ factory('AbsService', ['$http', '$rootScope',
         var service = {};
 
         service.GetAllAbs = GetAllAbs;
+        service.GetAllRoles = GetAllRoles;
         service.GetMyAbs = GetMyAbs;
         service.AddNewAb = AddNewAb;
         service.UpdateAb = UpdateAb;
@@ -208,6 +209,10 @@ factory('AbsService', ['$http', '$rootScope',
 
         function GetAllAbs() {
             return $http.get('/abilities').then(handleSuccess, handleError);
+        }
+
+        function GetAllRoles() {
+            return $http.get('/abilities/roles').then(handleSuccess, handleError);   
         }
 
         function GetMyAbs() {

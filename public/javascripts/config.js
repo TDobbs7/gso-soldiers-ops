@@ -41,10 +41,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 require_login: true,
                 good_roles: ["Admin"],
                 resolve: {
-                    OpsService: "OpsService",
-                    ops: function(OpsService) {
-                        return OpsService.GetAllOps().then(function(res) {
-                            return res.data.ops;
+                    AbsService: "AbsService",
+                    roles: function(AbsService) {
+                        return AbsService.GetAllRoles().then(function(res) {
+                            return res.data.data.roles;
                         }, function(error) {
                             return error;
                         });

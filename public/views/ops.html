@@ -1,21 +1,20 @@
 <div class="container">
-	<p>Operations would go here</p>
+	<form ng-submit="addNewUser(fname, lname, email, password, position )">
+		<div>
+			<h3><small>Add a new user:</small></h3>
+			<h3><small>First Name</small></h3><input type="text" ng-model="new_user.fname" size"150">
+			<h3><small>Last Name</small></h3><input type="text" ng-model="new_user.lname" size"150">
+			<h3><small>Email</small></h3><input type="text" ng-model="new_user.email" size"150">
+			<h3><small>Password</small></h3><input type="password" ng-model="new_user.password" size"150">
+			<h3><small>Class</small></h3>
+			<select ng-model="new_user.role.class" >
+				<option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
+			</select>
+			<h3><small>Position</small></h3><input type="text" ng-model="new_user.role.position" size"150">
+		</div>
+
+			<br><br>
+
+			<input class="btn btn-primary" type="submit">
+	</form>
 </div>
-<form ng-submit="addNewUser(fname, lname, email, password, position )">
-	<div>
-		<h3><small>Add a new user:</small></h3>
-		<h3><small>First Name</small></h3><input type="text" ng-model="fname" size"150">
-		<h3><small>Last Name</small></h3><input type="text" ng-model="lname" size"150">
-		<h3><small>Email</small></h3><input type="text" ng-model="email" size"150">
-		<h3><small>Password</small></h3><input type="password" ng-model="password" size"150">
-		<h3><small>Class</small></h3>
-		<select ng-model="class">
-			<option ng-repeat="class in classes" value="{{class}}">class</option>
-		</select>
-		<h3><small>Position</small></h3><input type="text" ng-model="position" size"150">
-	</div>
-
-		<br><br>
-
-		<input class="btn btn-primary" type="submit">
-</form>

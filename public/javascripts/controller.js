@@ -75,9 +75,9 @@ controller('Med_SchedCtrl', ['$rootScope','$location','$scope', 'MedReqService',
       }
     }
 ]).
-controller('OpsCtrl', ['$scope', 'ops',
-    function( $scope, ops) {
-        $scope.ops = ops;
+controller('OpsCtrl', ['$scope', 'roles',
+    function($scope, roles) {
+        $scope.roles = roles;
     }
 ]).
 controller('PlaysCtrl', ['$scope',
@@ -110,11 +110,6 @@ controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', '
     function($rootScope, $scope, $location, MedReqService, med_staff, players) {
         $scope.med_staff = med_staff;
         $scope.players = players;
-    }
-]).
-controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs',
-    function($scope, MedReqService, med_reqs) {
-        $scope.med_reqs = med_reqs;
 
         $scope.postReq = function(player, staff, request) {
             var credentials = {};

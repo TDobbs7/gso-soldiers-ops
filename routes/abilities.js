@@ -12,6 +12,23 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/roles', function(req, res, next) {
+    var db = req.db;
+    var ability_coll = db.collection('abilities');
+
+    ability_coll.find({}).sort({'class' : 1}).toArray(function(err, abilities) {
+        if (err) res.status(500).json({"message": "Error getting abilities\n" + err});
+        else {
+            var roles = [];
+            for (var index in abilities) {
+                roles.push(abilities[index].class);
+            }
+
+            res.json({"message": "success", "data": {"roles": roles}});
+        }
+    });
+})
+
 router.get('/:role', function(req, res, next) {
     var db = req.db;
     var ability_coll = db.collection('abilities');
