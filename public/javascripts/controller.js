@@ -90,14 +90,13 @@ controller('TradesCtrl', ['$scope',
 
     }
 ]).
-controller('ContractsCtrl', ['$scope',
-    function($scope) {
-
+controller('ContractsCtrl', ['$scope', 'contracts',
+    function($scope, contracts) {
+        $scope.contracts = contracts;
     }
 ]).
-controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', 'med_reqs', 'med_staff', 'players',
-    function($rootScope, $scope, $location, MedReqService, med_reqs, med_staff, players) {
-        $scope.med_reqs = med_reqs;
+controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', 'med_staff', 'players',
+    function($rootScope, $scope, $location, MedReqService, med_staff, players) {
         $scope.med_staff = med_staff;
         $scope.players = players;
 

@@ -242,4 +242,52 @@ factory('AbsService', ['$http', '$rootScope',
             });
         }
     }
+]).
+factory('ContractsService', ['$http', '$rootScope',
+    function($http, $rootScope) {
+        var service = {};
+
+        service.GetAllContracts = GetAllContracts;
+        service.GetMyContract = GetMyContract;
+        service.AddNewContract = AddNewContract;
+        service.UpdateContract = UpdateContract;
+        service.DeleteContract = DeleteContract;
+
+        return service;
+
+        function GetAllContracts() {
+            return $http.get('/contracts').then(handleSuccess, handleError);
+        }
+
+        function GetMyContracts() {
+            if ($rootScope.currentUserData.role.class === "Admin") return GetAllContracts();
+            return $http.get('/contracts/' + $rootScope.currentUserData.email).then(handleSuccess, handleError);
+        }
+
+        function AddNewContract(contract) {
+            return $http.post('/contracts', contract).then(handleSuccess, handleError);
+        }
+
+        function UpdateContract(contract) {
+            return $http.put('/contracts/' + contract.email, contract).then(handleSuccess, handleError);
+        }
+
+        function DeleteContract(email) {
+            return $http.delete('/contracts/' + email).then(handleSuccess, handleError);
+        }
+
+        // private functions
+
+        function handleSuccess(res) {
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
+        }
+
+        function handleError(error) {
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
+        }
+    }
 ]);

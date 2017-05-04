@@ -60,7 +60,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 resolve: {
                     ContractsService: "ContractsService",
                     contracts: function(ContractsService) {
-
+                        return ContractsService.GetMyContracts().then(function(res) {
+                            return res.data.data.contracts;
+                        }, function(error) {
+                            return error;
+                        });
                     }
                 }
             }).

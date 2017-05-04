@@ -19,7 +19,7 @@ router.get('/email/:email', function(req, res, next) {
     contracts_coll.findOne({'email': email}, function(err, contract) {
         if (err) res.status(500).json({"message": "Error finding contract (" + email + ")\n" + err});
         else if (!contract) res.status(404).json({"message": "Contract ("  + email + ") not found"});
-        else res.json({"message": "success", "data" : {"contract": contract}});
+        else res.json({"message": "success", "data" : {"contracts": contract}});
     });
 });
 
