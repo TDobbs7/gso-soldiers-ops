@@ -162,7 +162,7 @@ factory('MedReqService', ['$http', '$rootScope',
 
         function GetMyMedReqs() {
             var user = $rootScope.currentUserData;
-            if (user.role.class === "Admin" || user.role.class === "Medic") return GetAllMedReqs();
+            if (user.role.class === "Admin") return GetAllMedReqs();
             
             return $http.get('/med_reqs/' + $rootScope.currentUserData.email).then(handleSuccess, handleError);
         }
@@ -176,7 +176,7 @@ factory('MedReqService', ['$http', '$rootScope',
         }
 
         function DeleteMedReq(id) {
-            return $http.delete('/med_reqs/' + med_req._id).then(handleSuccess, handleError);
+            return $http.delete('/med_reqs/' + id).then(handleSuccess, handleError);
         }
 
         // private functions

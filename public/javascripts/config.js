@@ -56,7 +56,13 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/contracts.html',
                 controller: 'ContractsCtrl',
                 require_login: true,
-                good_roles: ["all"]
+                good_roles: ["all"],
+                resolve: {
+                    ContractsService: "ContractsService",
+                    contracts: function(ContractsService) {
+
+                    }
+                }
             }).
             state('home.plays', {
                 url: '.plays',
@@ -88,7 +94,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 resolve: {
                     MedReqService: "MedReqService",
                     med_reqs: function(MedReqService) {
-                        return MedReqService.GetMyMedReqs().then(function(res) {
+                        return MedReqService.GetAllMedReqs().then(function(res) {
                             return res.data.medical_reqs;
                         }, function(error) {
                             return error;
