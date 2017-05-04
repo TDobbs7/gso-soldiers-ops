@@ -46,9 +46,40 @@ controller('UserCtrl', ['$rootScope','$scope', 'abilities',
         }
     }
 ]).
-controller('Game_SchedCtrl', ['$scope',
-    function($scope) {
+controller('Game_SchedCtrl', ['$scope', '$rootScope', '$location', 'Game_SchedService', 'games',
+    function($scope, $rootScope, $location, Game_SchedService, games) {
+        $scope.games = games;
 
+        $scope.addNewGame = function(game) {
+            game.datetime = formatAMPM(game.datetime);
+            return Game_SchedService.AddNewGame(game).then(success, failed);
+        }
+
+        function success(res) {
+            //AuthenticationService.setCurrentUser(res.data);
+            alert("The game has been added!");
+            $rootScope.changeState('home');
+            $location.path('/home');
+        }
+
+        function failed(res) {
+            $rootScope.stopAndReport(res.data);
+        }
+
+        function formatAMPM(date) {
+            console.log(date);
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var year = date.getFullYear();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var strTime = month + "/" + day + "/" + year + " " + hours + ':' + minutes + ' ' + ampm;
+            return strTime;
+        }
     }
 ]).
 controller('Train_SchedCtrl', ['$scope',

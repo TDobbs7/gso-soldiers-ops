@@ -88,7 +88,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/game_sched.html',
                 controller: 'Game_SchedCtrl',
                 require_login: true,
-                good_roles: ["all"]
+                good_roles: ["all"],
+                resolve: {
+                    Game_SchedService: "Game_SchedService",
+                    games: function(Game_SchedService) {
+                        return Game_SchedService.GetAllGames().then(function(res) {
+                            return res.data.data.games;
+                        }, function(error) {
+                            return error;
+                        });
+                    }
+                }
             }).
             state('home.train_sched', {
                 url: '.train_sched',

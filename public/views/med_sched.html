@@ -12,7 +12,7 @@
       <td>{{case.player}}</td>
       <td>{{case.staff}}</td>
       <td>{{case.request}}</td>
-			<td>
+			<td data-ng-if="currentUserData.role.class === 'Medic'">
 				<input type="button" value="Resolved" class="btn btn-primary" ng-click="removeIssue(case._id)"/>
 			</td>
     </tr>

@@ -4,15 +4,16 @@
 			<h3><small>Add a new user:</small></h3>
 			<h3><small>First Name</small></h3><input type="text" ng-model="new_user.fname" size"150">
 			<h3><small>Last Name</small></h3><input type="text" ng-model="new_user.lname" size"150">
-			<h3><small>Email</small></h3><input type="text" ng-model="new_user.email" size"150">
+			<h3><small>Email</small></h3><input type="email" ng-model="new_user.email" size"150">
 			<h3><small>Password</small></h3><input type="password" ng-model="new_user.password" size"150">
 			<h3><small>Class</small></h3>
-			<select ng-model="new_user.role.class" >
+			<select ng-model="new_user.role.class">
 				<option ng-repeat="role in roles" value="{{role}}">{{role}}</option>
 			</select>
 			<h3><small>Position</small></h3><input type="text" ng-model="new_user.role.position" size"150">
-		<h3><small>Duration</small></h3><input type="text" ng-model="contract.duration" size"150">
-		<h3><small>Amount</small></h3><input type="text" ng-model="contract.amount" size"150"><br><br>
-		<input type="submit">
+			<h3><small>Duration</small></h3><input type="text" ng-model="contract.duration" size"150">
+			<h3><small>Amount</small></h3><input type="text" ng-model="contract.amount" size"150"><br><br>
+			<input type="submit">
 		</div>
+	</form>
 </div>

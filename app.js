@@ -18,6 +18,7 @@ var med_reqs = require('./routes/med_reqs');
 var abilities = require('./routes/abilities');
 var contracts = require('./routes/contracts');
 var plays = require('./routes/plays');
+var games = require('./routes/game_sched');
 
 var app = express();
 app.use(bodyParser.urlencoded({extended: true}))
@@ -54,6 +55,7 @@ app.use('/med_reqs', med_reqs);
 app.use('/abilities', abilities);
 app.use('/contracts', contracts);
 app.use('/playbook', plays);
+app.use('/game_sched', games);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

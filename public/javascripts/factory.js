@@ -295,4 +295,34 @@ factory('ContractsService', ['$http', '$rootScope',
             });
         }
     }
+]).
+factory('Game_SchedService', ['$http',
+    function($http) {
+        var service = {};
+
+        service.AddNewGame = AddNewGame;
+        service.GetAllGames = GetAllGames;
+
+        return service;
+
+        function AddNewGame(game) {
+            return $http.post('/game_sched', game).then(handleSuccess, handleError);
+        }
+
+        function GetAllGames() {
+            return $http.get('/game_sched').then(handleSuccess, handleError);
+        }
+
+        function handleSuccess(res) {
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
+        }
+
+        function handleError(error) {
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
+        }
+    }
 ]);

@@ -1,6 +1,5 @@
 <div class="container">
-
-	<!-- <style type="text/css">
+	<style type="text/css">
 		table.tableizer-table {
 			font-size: 18px;
 			border: 1px solid #CCC;
@@ -17,10 +16,29 @@
 			font-weight: bold;
 		}
 	</style>
+	
+	<form ng-submit="addNewGame(game)">
+		<h3><small>Add New Game to Schedule</small></h3><br><br>
+	
+		<h3><small>Date</small></h3>
+		<input type="datetime-local" ng-model="game.datetime" required>
+
+		<!-- <h3><small>Time</small></h3>
+		<input type="time" ng-model="game.time" required> -->
+
+		<h3><small>Location</small></h3>
+		<input type="text" ng-model="game.location" required>
+
+		<h3><small>Opponent</small></h3>
+		<input type="text" ng-model="game.opponent" required><br><br>
+		<input type="submit">
+	</form>
+
 	<table class="tableizer-table">
 	<thead><tr class="tableizer-firstrow"><th colspan="4" bgcolor="#1A7433" style="color: #FFFFFF">Greensboro Soliders Schedule</th></tr></thead><tbody>
-	 <tr><td width="61" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">Date</td><td width="55" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">Time</td><td width="143" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">Location</td><td width="117" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">Opponent</td></tr>
-	 <tr><td bgcolor="#8E610E" style="color: #FFFFFF">3-Jun</td><td bgcolor="#8E610E" style="color: #FFFFFF">7:00pm</td><td bgcolor="#8E610E" style="color: #FFFFFF">Winston-Salem, NC</td><td bgcolor="#8E610E" style="color: #FFFFFF">WildCats</td></tr>
+	 <tr><td width="61" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">Date-Time</td><td width="143" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">Location</td><td width="117" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">Opponent</td></tr>
+	 <tr ng-repeat="game in games"><td width="61" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">{{game.datetime}}</td><td width="143" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">{{game.location}}</td><td width="117" bgcolor="#E69E16" style="color: #FFFFFF; text-align: center;">{{game.opponent}}</td></tr>
+	 <!-- <tr><td bgcolor="#8E610E" style="color: #FFFFFF">3-Jun</td><td bgcolor="#8E610E" style="color: #FFFFFF">7:00pm</td><td bgcolor="#8E610E" style="color: #FFFFFF">Winston-Salem, NC</td><td bgcolor="#8E610E" style="color: #FFFFFF">WildCats</td></tr>
 	 <tr><td>10-Jun</td><td>7:00pm</td><td>Raleigh, NC</td><td>Raptors</td></tr>
 	 <tr><td bgcolor="#8E610E" style="color: #FFFDFD">17-Jun</td><td bgcolor="#8E610E" style="color: #FFFDFD">7:00pm</td><td bgcolor="#8E610E" style="color: #FFFDFD">Fayetteville, NC</td><td bgcolor="#8E610E" style="color: #FFFDFD">Flight</td></tr>
 	 <tr><td>24-Jun</td><td>7:00pm</td><td>Greensboro, NC</td><td>Rockets</td></tr>
@@ -36,13 +54,7 @@
 	 <tr><td bgcolor="#E69E16" style="color: #000000">2-Sep</td><td bgcolor="#E69E16" style="color: #000000">TBA</td><td bgcolor="#E69E16" style="color: #000000">TBA</td><td bgcolor="#E69E16" style="color: #000000">Playoffs</td></tr>
 	 <tr><td bgcolor="#E69E16" style="color: #000000">9-Sep</td><td bgcolor="#E69E16" style="color: #000000">TBA</td><td bgcolor="#E69E16" style="color: #000000">TBA</td><td bgcolor="#E69E16" style="color: #000000">Playoffs</td></tr>
 	 <tr><td bgcolor="#E69E16" style="color: #000000">16-Sep</td><td bgcolor="#E69E16" style="color: #000000">TBA</td><td bgcolor="#E69E16" style="color: #000000">TBA</td><td bgcolor="#E69E16" style="color: #000000">Playoffs</td></tr>
-	 <tr><td bgcolor="#1A7433" style="color: #FFFFFF">23-Sep</td><td bgcolor="#1A7433" style="color: #FFFFFF">5:00pm</td><td bgcolor="#1A7433" style="color: #FFFFFF">Atlanta, GA</td><td bgcolor="#1A7433" style="color: #FFFFFF">Championship</td></tr>
-	</tbody></table> -->
-
-	<img src="/docs/game_sched.png">
-
-	<h3><small>Upload New Game Schedule</small></h3>
-	<input type="file" id="game_sched" accept="image/*">
-	<input type="submit">
+	 <tr><td bgcolor="#1A7433" style="color: #FFFFFF">23-Sep</td><td bgcolor="#1A7433" style="color: #FFFFFF">5:00pm</td><td bgcolor="#1A7433" style="color: #FFFFFF">Atlanta, GA</td><td bgcolor="#1A7433" style="color: #FFFFFF">Championship</td></tr> -->
+	</tbody></table>
 </div>
 <!-- <img src=" public/docs/game_sched.png"> -->
