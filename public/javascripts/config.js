@@ -59,9 +59,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 good_roles: ["all"],
                 resolve: {
                     ContractsService: "ContractsService",
+                    UserService: "UserService",
                     contracts: function(ContractsService) {
                         return ContractsService.GetMyContracts().then(function(res) {
                             return res.data.data.contracts;
+                        }, function(error) {
+                            return error;
+                        });
+                    },
+                    users: function(UserService) {
+                        return UserService.GetAllUsers().then(function(res) {
+                            return res.data.data.users;
                         }, function(error) {
                             return error;
                         });

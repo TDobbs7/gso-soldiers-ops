@@ -14,7 +14,7 @@ app.controller('TestCtrl', ['$scope', '$http',
         }
     }
 ]).
-controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserService', 'AuthenticationService',
+controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserService', 'AuthenticationService', 
     function($rootScope, $scope, $http, $location, UserService, AuthenticationService) {
         $scope.login = function(email, password) {
             var credentials = {
@@ -75,9 +75,9 @@ controller('Med_SchedCtrl', ['$rootScope','$location','$scope', 'MedReqService',
       }
     }
 ]).
-controller('OpsCtrl', ['$scope','$rootScope','$location',
-    function( $scope, $rootScope, $location) {
-
+controller('OpsCtrl', ['$scope', 'ops',
+    function( $scope, ops) {
+        $scope.ops = ops;
     }
 ]).
 controller('PlaysCtrl', ['$scope',
@@ -85,9 +85,21 @@ controller('PlaysCtrl', ['$scope',
 
     }
 ]).
-controller('ContractsCtrl', ['$scope', 'ContractsService', 'contracts',
-    function($scope, ContractsService, contracts) {
-        $scope.contracts = contracts;
+controller('ContractsCtrl', ['$scope', 'ContractsService', 'contracts', 'users',
+    function($scope, ContractsService, contracts, users) {
+        $scope.contracts = [];
+
+        contracts.forEach(function(contract) {
+            for (var index in users) {
+                if (users[index].email === contract.email) {
+                    contract.fname = users[index].fname;
+                    contract.lname = users[index].lname;
+                    contract.role = users[index].role.class;
+                    $scope.contracts.push(contract);
+                    break;
+                }
+            }
+        });
     }
 ]).
 controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', 'med_staff', 'players',
@@ -107,7 +119,7 @@ controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', '
 
             return MedReqService.AddNewMedReq(credentials).then(success,failed);
           }
-          
+
           function success(res) {
               //AuthenticationService.setCurrentUser(res.data);
               alert("Your request has been posted!");

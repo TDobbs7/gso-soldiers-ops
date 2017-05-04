@@ -1,20 +1,30 @@
 <div class="container" data-ng-if="user.role.class === 'Admin'">
 	<div class="container" ng-repeat="contract in contracts">
+		<style type="text/css">
+			hr {
+			    display: block;
+			    height: 1px;
+			    border: 0;
+			    border-top: 3px solid #ccc;
+			    margin: 1em 0;
+			    padding: 0;
+			}
+		</style>
 		<p style="text-align: center;"><strong>Greensboro Soldiers Basketball Performance Contract</strong></p>
 		<p style="text-align: center;"><strong>Greensboro Soldiers Basketball Association</strong></p>
 		<p style="text-align: center;"><strong>Contract</strong></p>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
-		<p>THIS Performer's Contract (the "AGREEMENT") is made {{contract.date}}, by and between the Greensboro Soldiers Basketball Association (hereinafter referred to as the "GSB") and <strong>{{user.fname}} {{user.lname}}</strong> (hereinafter referred to as the "{{user.role.class}}}").</p>
+		<p>THIS Performer's Contract (the "AGREEMENT") is made {{contract.date}}, by and between the Greensboro Soldiers Basketball Association (hereinafter referred to as the "GSB") and <strong>{{contract.fname}} {{contract.lname}}</strong> (hereinafter referred to as the "{{contract.role}}}").</p>
 		<p>&nbsp;</p>
 		<p>&nbsp;<strong>WITNESSETH:</strong></p>
 		<p>&nbsp;</p>
 		<ol>
-		<li><strong>Term &amp; Scope.</strong> The Club hereby employs the {{user.role.class}} as a skilled professional basketball {{user.role.class}} for one calendar year (subject to Section 2 below) starting May 10, 2017. The {{user.role.class}}'s employment includes: attendance at any and all scheduled training camps and practice sessions; playing in any national or international tournaments during, immediately preceding or immediately following the GSB season; and participating in all reasonable Club and GSB promotional activities.</li>
+		<li><strong>Term &amp; Scope.</strong> The Club hereby employs the {{contract.role}} as a skilled professional basketball {{contract.role}} for one calendar year (subject to Section 2 below) starting {{contract.date}}. The {{contract.role}}'s employment includes: attendance at any and all scheduled training camps and practice sessions; playing in any national or international tournaments during, immediately preceding or immediately following the GSB season; and participating in all reasonable Club and GSB promotional activities.</li>
 		</ol>
 		<p>&nbsp;</p>
 		<ol start="2">
-		<li><strong> Automatic Renewal.</strong> The Club may offer the {{user.role.class}} an Agreement for the next calendar year before this Agreement's term ends by mailing a Performer's Contract to the {{user.role.class}} at the address listed under his signature or to his last known address. If the {{user.role.class}} does not sign and return the {{user.role.class}}'s Contract within fifteen (15) business days, this Agreement shall be automatically renewed for one (1) calendar year upon the same terms and conditions as those contained herein unless otherwise specified below. Subject to Section 18, no further renewals shall be granted under this Agreement provided the {{user.role.class}} has completed the renewal year and complied with all terms and conditions of this Agreement. The annual salary for an automatically renewed contract shall be that amount listed in the {{user.role.class}}'s Contract sent to the {{user.role.class}} or 105% of the amount earned by the {{user.role.class}}, excluding regular season and playoff bonuses and cost of living adjustments, if any, for the last playing season covered by this Agreement, whichever is greater.</li>
+		<li><strong> Automatic Renewal.</strong> The Club may offer the {{contract.role}} an Agreement for the next calendar year before this Agreement's term ends by mailing a Performer's Contract to the {{contract.role}} at the address listed under his signature or to his last known address. If the {{contract.role}} does not sign and return the {{contract.role}}'s Contract within fifteen (15) business days, this Agreement shall be automatically renewed for one (1) calendar year upon the same terms and conditions as those contained herein unless otherwise specified below. Subject to Section 18, no further renewals shall be granted under this Agreement provided the {{contract.role}} has completed the renewal year and complied with all terms and conditions of this Agreement. The annual salary for an automatically renewed contract shall be that amount listed in the {{contract.role}}'s Contract sent to the {{contract.role}} or 105% of the amount earned by the {{contract.role}}, excluding regular season and playoff bonuses and cost of living adjustments, if any, for the last playing season covered by this Agreement, whichever is greater.</li>
 		</ol>
 		<p>&nbsp;</p>
 		<ol start="3">
@@ -22,13 +32,141 @@
 		</ol>
 		<p>&nbsp;</p>
 		<ol start="3.1">
-		<li><strong>Regular Season.</strong> For the regular season, the Club will pay the {{user.role.class}} an annual salary of $80,000 (less all amounts, if any, withheld by federal, state and local authorities), in bi weekly installments of $ 4,700 each, with the first payment on May 24, 2017, and the {{user.role.class}} is on the Club's active roster during the time that said payment is earned.</li>
+		<li><strong>Regular Season.</strong> For the regular season, the Club will pay the {{contract.role}} an annual salary of $80,000 (less all amounts, if any, withheld by federal, state and local authorities), in bi weekly installments of $ 4,700 each, so long as the {{contract.role}} is under the Club's employment during the time that said payment is earned.</li>
 		</ol>
 		<p>&nbsp;</p>
 		<ol start="3.2">
-		<li><strong>Housing Allowance. </strong> The Club may provide the {{user.role.class}} a housing allowance in an amount not greater than $1,000 per month, pro-rated for the days the {{user.role.class}} is on the Club's active roster.</li>
+		<li><strong>Housing Allowance. </strong> The Club may provide the {{contract.role}} a housing allowance in an amount not greater than $1,000 per month, pro-rated for the days the {{contract.role}} is on the Club's active roster.</li>
 		</ol>
-		<p>&nbsp;</p>
+		<div class="container" data-ng-if="contract.role === 'Player'">
+			<ol start="3.3">
+			<li style="text-align: left;"><strong> Playoff Compensation. </strong>The Playoff compensation for each Player on an active playoff roster shall consist of the equivalent of his season weekly compensation plus the following:</li>
+			</ol>
+			<table>
+			<thead>
+			<tr>
+			<td style="text-align: center;" width="141">
+			<p>&nbsp;Winning Team</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>&nbsp;Losing Team</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>&nbsp;</p>
+			</td>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td style="text-align: center;" width="141">
+			<p>Round One:</p>
+			<p>(Shoot-out)</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>Share accrues</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>$100.00 per Player</p>
+			</td>
+			</tr>
+			<tr>
+			<td style="text-align: center;" width="141">
+			<p>Round Two:</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>Share accrues</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>$300.00 per Player</p>
+			</td>
+			</tr>
+			<tr>
+			<td style="text-align: center;" width="141">
+			<p>Round Three:</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>Share accrues</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>$700.00 per Player</p>
+			</td>
+			</tr>
+			<tr>
+			<td style="text-align: center;" width="141">
+			<p>Championship:</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>$2,500.00 per Player</p>
+			</td>
+			<td style="text-align: center;" width="141">
+			<p>$1,700.00 per Player</p>
+			</td>
+			</tr>
+			</tbody>
+			</table>
+			<p style="text-align: center;">&nbsp;</p>
+			<p style="text-align: center;">&nbsp;</p>
+		</div>
+
+		<ol style="text-align: center;" start="4">
+			<li style="text-align: left;"><strong> Approval.</strong> This Agreement is valid only after it has been signed by the {{contract.role}} and the Club and approved by the GSB Commissioner. Within forty-eight (48) hours of execution of this Agreement, the {{contract.role}} must return it to the Club, which must then immediately forward it to the GSB Office. This Agreement shall be deemed approved ten (10) business days after it is received in the GSB Office, unless the Commissioner disapproves it within the ten (10) day period. If the Commissioner disapproves of this Agreement, it is of no force or effect and the {{contract.role}} and the Club are relieved of the rights and obligations contained herein. The {{contract.role}} should call the GSB Office at 303-331-0404 if he does not receive a white copy of this Agreement within twenty (20) business days after the date of execution.</li>
+		</ol>
+		<p style="text-align: center;">&nbsp;</p>
+		<table>
+			<tbody>
+			<tr>
+			<td width="207">
+			<p>Agreed: _Hunter Vick_</p>
+			<p>Signature of &nbsp;President</p>
+			</td>
+			<td width="207">
+			<p>Agreed: {{contract.fname}} {{contract.lname}}</p>
+			<p>{{contracts.date}}</p>
+			<p>&nbsp;</p>
+			</td>
+			</tr>
+			<tr>
+			<td width="207">
+			<p>&nbsp;</p>
+			</td>
+			</tr>
+			</tbody>
+		</table>
+		<hr>
+	</div>
+</div>
+
+<div class="container" data-ng-if="user.role.class !== 'Admin'">
+	<p style="text-align: center;"><strong>Greensboro Soldiers Basketball Performance Contract</strong></p>
+	<p style="text-align: center;"><strong>Greensboro Soldiers Basketball Association</strong></p>
+	<p style="text-align: center;"><strong>Contract</strong></p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>THIS Performer's Contract (the "AGREEMENT") is made {{contracts.date}}, by and between the Greensboro Soldiers Basketball Association (hereinafter referred to as the "GSB") and <strong>{{user.fname}} {{user.lname}}</strong> (hereinafter referred to as the "{{user.role.class}}").</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;<strong>WITNESSETH:</strong></p>
+	<p>&nbsp;</p>
+	<ol>
+	<li><strong>Term &amp; Scope.</strong> The Club hereby employs the {{user.role.class}} as a skilled professional basketball {{user.role.class}} for one calendar year (subject to Section 2 below) starting {{contracts.date}}. The {{user.role.class}}'s employment includes: attendance at any and all scheduled training camps and practice sessions; playing in any national or international tournaments during, immediately preceding or immediately following the GSB season; and participating in all reasonable Club and GSB promotional activities.</li>
+	</ol>
+	<p>&nbsp;</p>
+	<ol start="2">
+	<li><strong> Automatic Renewal.</strong> The Club may offer the {{user.role.class}} an Agreement for the next calendar year before this Agreement's term ends by mailing a Performer's Contract to the {{user.role.class}} at the address listed under his signature or to his last known address. If the {{user.role.class}} does not sign and return the {{user.role.class}}'s Contract within fifteen (15) business days, this Agreement shall be automatically renewed for one (1) calendar year upon the same terms and conditions as those contained herein unless otherwise specified below. Subject to Section 18, no further renewals shall be granted under this Agreement provided the {{user.role.class}} has completed the renewal year and complied with all terms and conditions of this Agreement. The annual salary for an automatically renewed contract shall be that amount listed in the {{user.role.class}}'s Contract sent to the {{user.role.class}} or 105% of the amount earned by the {{user.role.class}}, excluding regular season and playoff bonuses and cost of living adjustments, if any, for the last playing season covered by this Agreement, whichever is greater.</li>
+	</ol>
+	<p>&nbsp;</p>
+	<ol start="3">
+	<li><strong>Compensation.</strong> Subject to the other terms and conditions of this Agreement:</li>
+	</ol>
+	<p>&nbsp;</p>
+	<ol start="3.1">
+	<li><strong>Regular Season.</strong> For the regular season, the Club will pay the {{user.role.class}} an annual salary of $80,000 (less all amounts, if any, withheld by federal, state and local authorities), in bi weekly installments of $ 4,700 each, so long as the {{user.role.class}} is on the Club's active roster during the time that said payment is earned.</li>
+	</ol>
+	<p>&nbsp;</p>
+	<ol start="3.2">
+	<li><strong>Housing Allowance. </strong> The Club may provide the {{user.role.class}} a housing allowance in an amount not greater than $1,000 per month, pro-rated for the days the {{user.role.class}} is under the Club's employment.</li>
+	</ol>
+	<p>&nbsp;</p>
+	<div class="container" data-ng-if="user.role.class === 'Player'">
 		<ol start="3.3">
 		<li style="text-align: left;"><strong> Playoff Compensation. </strong>The Playoff compensation for each {{user.role.class}} on an active playoff roster shall consist of the equivalent of his season weekly compensation plus the following:</li>
 		</ol>
@@ -92,139 +230,12 @@
 		<p>$1,700.00 per {{user.role.class}}</p>
 		</td>
 		</tr>
-		</tbody>
-		</table>
-		<p style="text-align: center;">&nbsp;</p>
-		<p style="text-align: center;">&nbsp;</p>
-		<ol style="text-align: center;" start="4">
-		<li style="text-align: left;"><strong> Approval.</strong> This Agreement is valid only after it has been signed by the {{user.role.class}} and the Club and approved by the GSB Commissioner. Within forty-eight (48) hours of execution of this Agreement, the {{user.role.class}} must return it to the Club, which must then immediately forward it to the GSB Office. This Agreement shall be deemed approved ten (10) business days after it is received in the GSB Office, unless the Commissioner disapproves it within the ten (10) day period. If the Commissioner disapproves of this Agreement, it is of no force or effect and the {{user.role.class}} and the Club are relieved of the rights and obligations contained herein. The {{user.role.class}} should call the GSB Office at 303-331-0404 if he does not receive a white copy of this Agreement within twenty (20) business days after the date of execution.</li>
-		</ol>
-		<p style="text-align: center;">&nbsp;</p>
-		<table>
-		<tbody>
-		<tr>
-		<td width="207">
-		<p>Agreed: _Hunter Vick_</p>
-		<p>Signature of &nbsp;President</p>
-		</td>
-		<td width="207">
-		<p>Agreed: {{user.fname}} {{user.lname}}</p>
-		<p>04/16/2017</p>
-		<p>&nbsp;</p>
-		</td>
-		</tr>
-		<tr>
-		<td width="207">
-		<p>&nbsp;</p>
-		</td>
-		<td width="207">
-		<p>Social Security # _6745____</p>
-		</td>
-		</tr>
+		</div>
 		</tbody>
 		</table>
 		<p style="text-align: center;">&nbsp;</p>
 		<p style="text-align: center;">&nbsp;</p>
 	</div>
-</div>
-
-<div class="container" data-ng-if="user.role.class !== 'Admin'">
-	<p style="text-align: center;"><strong>Greensboro Soldiers Basketball Performance Contract</strong></p>
-	<p style="text-align: center;"><strong>Greensboro Soldiers Basketball Association</strong></p>
-	<p style="text-align: center;"><strong>Contract</strong></p>
-	<p>&nbsp;</p>
-	<p>&nbsp;</p>
-	<p>THIS Performer's Contract (the "AGREEMENT") is made {{contracts.date}}, by and between the Greensboro Soldiers Basketball Association (hereinafter referred to as the "GSB") and <strong>{{user.fname}} {{user.lname}}</strong> (hereinafter referred to as the "{{user.role.class}}").</p>
-	<p>&nbsp;</p>
-	<p>&nbsp;<strong>WITNESSETH:</strong></p>
-	<p>&nbsp;</p>
-	<ol>
-	<li><strong>Term &amp; Scope.</strong> The Club hereby employs the {{user.role.class}} as a skilled professional basketball {{user.role.class}} for one calendar year (subject to Section 2 below) starting May 10, 2017. The {{user.role.class}}'s employment includes: attendance at any and all scheduled training camps and practice sessions; playing in any national or international tournaments during, immediately preceding or immediately following the GSB season; and participating in all reasonable Club and GSB promotional activities.</li>
-	</ol>
-	<p>&nbsp;</p>
-	<ol start="2">
-	<li><strong> Automatic Renewal.</strong> The Club may offer the {{user.role.class}} an Agreement for the next calendar year before this Agreement's term ends by mailing a Performer's Contract to the {{user.role.class}} at the address listed under his signature or to his last known address. If the {{user.role.class}} does not sign and return the {{user.role.class}}'s Contract within fifteen (15) business days, this Agreement shall be automatically renewed for one (1) calendar year upon the same terms and conditions as those contained herein unless otherwise specified below. Subject to Section 18, no further renewals shall be granted under this Agreement provided the {{user.role.class}} has completed the renewal year and complied with all terms and conditions of this Agreement. The annual salary for an automatically renewed contract shall be that amount listed in the {{user.role.class}}'s Contract sent to the {{user.role.class}} or 105% of the amount earned by the {{user.role.class}}, excluding regular season and playoff bonuses and cost of living adjustments, if any, for the last playing season covered by this Agreement, whichever is greater.</li>
-	</ol>
-	<p>&nbsp;</p>
-	<ol start="3">
-	<li><strong>Compensation.</strong> Subject to the other terms and conditions of this Agreement:</li>
-	</ol>
-	<p>&nbsp;</p>
-	<ol start="3.1">
-	<li><strong>Regular Season.</strong> For the regular season, the Club will pay the {{user.role.class}} an annual salary of $80,000 (less all amounts, if any, withheld by federal, state and local authorities), in bi weekly installments of $ 4,700 each, with the first payment on May 24, 2017, and the {{user.role.class}} is on the Club's active roster during the time that said payment is earned.</li>
-	</ol>
-	<p>&nbsp;</p>
-	<ol start="3.2">
-	<li><strong>Housing Allowance. </strong> The Club may provide the {{user.role.class}} a housing allowance in an amount not greater than $1,000 per month, pro-rated for the days the {{user.role.class}} is on the Club's active roster.</li>
-	</ol>
-	<p>&nbsp;</p>
-	<ol start="3.3">
-	<li style="text-align: left;"><strong> Playoff Compensation. </strong>The Playoff compensation for each {{user.role.class}} on an active playoff roster shall consist of the equivalent of his season weekly compensation plus the following:</li>
-	</ol>
-	<table>
-	<thead>
-	<tr>
-	<td style="text-align: center;" width="141">
-	<p>&nbsp;Winning Team</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>&nbsp;Losing Team</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>&nbsp;</p>
-	</td>
-	</tr>
-	</thead>
-	<tbody>
-	<tr>
-	<td style="text-align: center;" width="141">
-	<p>Round One:</p>
-	<p>(Shoot-out)</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>Share accrues</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>$100.00 per {{user.role.class}}</p>
-	</td>
-	</tr>
-	<tr>
-	<td style="text-align: center;" width="141">
-	<p>Round Two:</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>Share accrues</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>$300.00 per {{user.role.class}}</p>
-	</td>
-	</tr>
-	<tr>
-	<td style="text-align: center;" width="141">
-	<p>Round Three:</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>Share accrues</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>$700.00 per {{user.role.class}}</p>
-	</td>
-	</tr>
-	<tr>
-	<td style="text-align: center;" width="141">
-	<p>Championship:</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>$2,500.00 per {{user.role.class}}</p>
-	</td>
-	<td style="text-align: center;" width="141">
-	<p>$1,700.00 per {{user.role.class}}</p>
-	</td>
-	</tr>
-	</tbody>
-	</table>
-	<p style="text-align: center;">&nbsp;</p>
-	<p style="text-align: center;">&nbsp;</p>
 	<ol style="text-align: center;" start="4">
 	<li style="text-align: left;"><strong> Approval.</strong> This Agreement is valid only after it has been signed by the {{user.role.class}} and the Club and approved by the GSB Commissioner. Within forty-eight (48) hours of execution of this Agreement, the {{user.role.class}} must return it to the Club, which must then immediately forward it to the GSB Office. This Agreement shall be deemed approved ten (10) business days after it is received in the GSB Office, unless the Commissioner disapproves it within the ten (10) day period. If the Commissioner disapproves of this Agreement, it is of no force or effect and the {{user.role.class}} and the Club are relieved of the rights and obligations contained herein. The {{user.role.class}} should call the GSB Office at 303-331-0404 if he does not receive a white copy of this Agreement within twenty (20) business days after the date of execution.</li>
 	</ol>
@@ -238,16 +249,13 @@
 	</td>
 	<td width="207">
 	<p>Agreed: {{user.fname}} {{user.lname}}</p>
-	<p>04/16/2017</p>
+	<p>{{contracts.date}}</p>
 	<p>&nbsp;</p>
 	</td>
 	</tr>
 	<tr>
 	<td width="207">
 	<p>&nbsp;</p>
-	</td>
-	<td width="207">
-	<p>Social Security # _6745____</p>
 	</td>
 	</tr>
 	</tbody>
