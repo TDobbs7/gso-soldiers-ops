@@ -94,7 +94,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 resolve: {
                     MedReqService: "MedReqService",
                     med_reqs: function(MedReqService) {
-                        return MedReqService.GetAllMedReqs().then(function(res) {
+                        return MedReqService.GetMyMedReqs().then(function(res) {
                             return res.data.medical_reqs;
                         }, function(error) {
                             return error;
@@ -107,17 +107,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/med_reqs.html',
                 controller: 'MedReqsCtrl',
                 require_login: true,
-                good_roles: ["Player", "Coach", "Medic"],
+                good_roles: ["Player", "Coach"],
                 resolve: {
-                    MedReqService: 'MedReqService',
                     UserService: 'UserService',
-                    med_reqs: function(MedReqService) {
-                        return MedReqService.GetMyMedReqs().then(function(res) {
-                            return res.data.medical_reqs;
-                        }, function(error) {
-                            return error;
-                        });
-                    },
                     med_staff: function(UserService) {
                         return UserService.GetByRole('Medic').then(function(res) {
                             return res.data.data.users;

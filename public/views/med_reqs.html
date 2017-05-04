@@ -18,39 +18,3 @@
 	  	<input type="submit">
 	</form>
 </div>
-
-<div class="container" data-ng-if="currentUserData.role.class === 'Medic'">
-  <div class="container">
-  	<h3><small>{{user.fname}} {{user.lname}}'s Medical Schedule</small></h3>
-  	<table class="table">
-    <tr>
-      <th>Player</th>
-      <th>Staff</th>
-      <th>Check</th>
-    </tr>
-    <tr data-ng-repeat="case in med_reqs" >
-      <td>{{case.player}}</td>
-      <td>{{case.staff}}</td>
-      <td>{{case.request}}</td>
-			<td>
-				<input type="button" value="Resolved" class="btn btn-primary" ng-click="removeIssue(case._id)"/>
-			</td>
-    </tr>
-  </table>
-  </div>
-
-  <style>
-  table, th , td {
-    border: 3px solid grey;
-    border-collapse: collapse;
-    padding: 15px;
-  }
-  table tr:nth-child(odd) {
-    background-color: #f1f1f1;
-  }
-  table tr:nth-child(even) {
-    background-color: #ffffff;
-  }
-  </style>
-
-</div>
