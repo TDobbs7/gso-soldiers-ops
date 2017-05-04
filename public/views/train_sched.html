@@ -1,4 +1,54 @@
-<div class="container" data-ng-if="currentUserData.role.class === 'Admin'">
-	<!-- <embed src="/docs/Greensboro Basketball Association Performance Contract Saved.docx" type=></embed> -->
-	<iframe src="/docs/Greensboro Basketball Association Performance Contract Saved.htm" width="100%" height="400px"></iframe>
+<div class="container" data-ng-if="user.role.class === 'Coach' || user.role.class === 'Player'">
+	<style type="text/css">
+		table.tableizer-table {
+			font-size: 18px;
+			border: 1px solid #CCC;
+			font-family: Arial, Helvetica, sans-serif;
+		}
+		.tableizer-table td {
+			padding: 4px;
+			margin: 3px;
+			border: 1px solid #CCC;
+		}
+		.tableizer-table th {
+			background-color: #2E790D;
+			color: #FFF;
+			font-weight: bold;
+		}
+	</style>
+	
+	<table class="tableizer-table">
+		<thead>
+			<tr class="tableizer-firstrow">
+				<th>Training Schedule</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr><td>Date</td><td>Time</td><td>Location</td><td>Training</td></tr>
+			<tr><td>5-Jun</td><td>7:00pm</td><td>Green Center</td><td>Cardio and Conditioning</td></tr>
+			<tr><td>8-Jun</td><td>6:00pm</td><td>Green Center</td><td>Ball Handling and Dribbling</td></tr>
+			<tr><td>11-Jun</td><td>7:00pm</td><td>Red Center</td><td>Shooting and Free Throws</td></tr>
+			<tr><td>15-Jun</td><td>7:00pm</td><td>Blue Center</td><td>P90X Plyometrics</td></tr>
+			<tr><td>19-Jun</td><td>7:00pm</td><td>Red Center</td><td>Weight Lifting</td></tr>
+			<tr><td>22-Jun</td><td>7:00pm</td><td>Yellow Center</td><td>Weight Lifting</td></tr>
+			<tr><td>25-Jun</td><td>7:00pm</td><td>Red Center</td><td>Speed and Agility</td></tr>
+			<tr><td>30-Jun</td><td>7:00pm</td><td>Blue Center</td><td>Free Training</td></tr>
+			<tr><td>5-Jul</td><td>7:00pm</td><td>Green Center</td><td>Cardio and Conditioning</td></tr>
+			<tr><td>8-Jul</td><td>6:00pm</td><td>Green Center</td><td>Ball Handling and Dribbling</td></tr>
+			<tr><td>11-Jul</td><td>7:00pm</td><td>Red Center</td><td>Shooting and Free Throws</td></tr>
+			<tr><td>15-Jul</td><td>7:00pm</td><td>Blue Center</td><td>P90X Plyometrics</td></tr>
+			<tr><td>19-Jul</td><td>7:00pm</td><td>Red Center</td><td>Weight Lifting</td></tr>
+			<tr><td>22-Jul</td><td>7:00pm</td><td>Yellow Center</td><td>Weight Lifting</td></tr>
+			<tr><td>25-Jul</td><td>7:00pm</td><td>Red Center</td><td>Speed and Agility</td></tr>
+			<tr><td>30-Jul</td><td>7:00pm</td><td>Blue Center</td><td>Free Training</td></tr>
+			<tr><td>5-Aug</td><td>7:00pm</td><td>Green Center</td><td>Cardio and Conditioning</td></tr>
+			<tr><td>8-Aug</td><td>6:00pm</td><td>Green Center</td><td>Ball Handling and Dribbling</td></tr>
+			<tr><td>11-Aug</td><td>7:00pm</td><td>Red Center</td><td>Shooting and Free Throws</td></tr>
+			<tr><td>15-Aug</td><td>7:00pm</td><td>Blue Center</td><td>P90X Plyometrics</td></tr>
+			<tr><td>19-Aug</td><td>7:00pm</td><td>Red Center</td><td>Weight Lifting</td></tr>
+			<tr><td>22-Aug</td><td>7:00pm</td><td>Yellow Center</td><td>Weight Lifting</td></tr>
+			<tr><td>25-Aug</td><td>7:00pm</td><td>Red Center</td><td>Speed and Agility</td></tr>
+			<tr><td>30-Aug</td><td>7:00pm</td><td>Blue Center</td><td>Free Training</td></tr>
+		</tbody>
+	</table>
 </div>

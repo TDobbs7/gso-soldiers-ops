@@ -1,7 +1,7 @@
 var app = angular.module('gso-soldiers-ops');
 
-app.factory('UserService', ['$http', 'OpsService',
-    function($http, OpsService) {
+app.factory('UserService', ['$http', 'AbsService',
+    function($http, AbsService) {
         var service = {};
 
         service.GetAllUsers = GetAllUsers;
@@ -74,9 +74,7 @@ factory('AuthenticationService', ['$rootScope',
 
         function setCurrentUser(res) {
             window.sessionStorage.setItem("user", JSON.stringify(res.data.user));
-            window.sessionStorage.setItem("abilities", JSON.stringify(res.data.abilities));
             $rootScope.currentUserData = res.data.user;
-            $rootScope.currentUserData.abilities = res.data.abilities;
         }
         
         function clearCurrentUser() {
@@ -164,7 +162,7 @@ factory('MedReqService', ['$http', '$rootScope',
 
         function GetMyMedReqs() {
             var user = $rootScope.currentUserData;
-            if (user.role.class === "Admin" || user.role.class === "Medic") return GetAllMedReqs();
+            if (user.role.class === "Admin" || user.role.class === "Coach") return GetAllMedReqs();
             
             return $http.get('/med_reqs/' + $rootScope.currentUserData.email).then(handleSuccess, handleError);
         }
@@ -178,7 +176,104 @@ factory('MedReqService', ['$http', '$rootScope',
         }
 
         function DeleteMedReq(id) {
-            return $http.delete('/med_reqs/' + med_req._id).then(handleSuccess, handleError);
+            return $http.delete('/med_reqs/' + id).then(handleSuccess, handleError);
+        }
+
+        // private functions
+
+        function handleSuccess(res) {
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
+        }
+
+        function handleError(error) {
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
+        }
+    }
+]).
+factory('AbsService', ['$http', '$rootScope',
+    function($http, $rootScope) {
+        var service = {};
+
+        service.GetAllAbs = GetAllAbs;
+        service.GetMyAbs = GetMyAbs;
+        service.AddNewAb = AddNewAb;
+        service.UpdateAb = UpdateAb;
+        service.DeleteAb = DeleteAb;
+
+        return service;
+
+        function GetAllAbs() {
+            return $http.get('/abilities').then(handleSuccess, handleError);
+        }
+
+        function GetMyAbs() {
+            var role = $rootScope.currentUserData.role.class;
+
+            return $http.get('/abilities/' + role).then(handleSuccess, handleError);
+        }
+
+        function AddNewAb(ability) {
+            return $http.post('/abilities', ability).then(handleSuccess, handleError);
+        }
+
+        function UpdateAb(ability) {
+            return $http.put('/abilities/' + ability.role, ability).then(handleSuccess, handleError);
+        }
+
+        function DeleteAb(id) {
+            return $http.delete('/abilities/' + med_req._id).then(handleSuccess, handleError);
+        }
+
+        // private functions
+
+        function handleSuccess(res) {
+            return new Promise(function(resolve, reject) {
+                resolve({"data" : res.data});
+            });
+        }
+
+        function handleError(error) {
+            return new Promise(function(resolve, reject) {
+                reject(error);
+            });
+        }
+    }
+]).
+factory('ContractsService', ['$http', '$rootScope',
+    function($http, $rootScope) {
+        var service = {};
+
+        service.GetAllContracts = GetAllContracts;
+        service.GetMyContracts = GetMyContracts;
+        service.AddNewContract = AddNewContract;
+        service.UpdateContract = UpdateContract;
+        service.DeleteContract = DeleteContract;
+
+        return service;
+
+        function GetAllContracts() {
+            return $http.get('/contracts').then(handleSuccess, handleError);
+        }
+
+        function GetMyContracts() {
+            if ($rootScope.currentUserData.role.class === "Admin") return GetAllContracts();
+            return $http.get('/contracts/' + $rootScope.currentUserData.email).then(handleSuccess, handleError);
+        }
+
+        function AddNewContract(contract) {
+            return $http.post('/contracts', contract).then(handleSuccess, handleError);
+        }
+
+        function UpdateContract(contract) {
+            return $http.put('/contracts/' + contract.email, contract).then(handleSuccess, handleError);
+        }
+
+        function DeleteContract(email) {
+            return $http.delete('/contracts/' + email).then(handleSuccess, handleError);
         }
 
         // private functions

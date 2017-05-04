@@ -22,7 +22,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/home.html',
                 controller: 'UserCtrl',
                 require_login: true,
-                good_roles: ["all"]
+                good_roles: ["all"],
+                resolve: {
+                    AbsService: "AbsService",
+                    abilities: function(AbsService) {
+                        return AbsService.GetMyAbs().then(function(res) {
+                            return res.data.data.abilities;
+                        }, function(error) {
+                            return error;
+                        });
+                    }
+                }
             }).
             state('home.ops', {
                 url: '.ops',
@@ -46,7 +56,25 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/contracts.html',
                 controller: 'ContractsCtrl',
                 require_login: true,
-                good_roles: ["all"]
+                good_roles: ["all"],
+                resolve: {
+                    ContractsService: "ContractsService",
+                    UserService: "UserService",
+                    contracts: function(ContractsService) {
+                        return ContractsService.GetMyContracts().then(function(res) {
+                            return res.data.data.contracts;
+                        }, function(error) {
+                            return error;
+                        });
+                    },
+                    users: function(UserService) {
+                        return UserService.GetAllUsers().then(function(res) {
+                            return res.data.data.users;
+                        }, function(error) {
+                            return error;
+                        });
+                    }
+                }
             }).
             state('home.plays', {
                 url: '.plays',
@@ -91,31 +119,24 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/med_reqs.html',
                 controller: 'MedReqsCtrl',
                 require_login: true,
-                good_roles: ["Player", "Coach", "Medic"],
+                good_roles: ["Player", "Coach"],
                 resolve: {
-                    MedReqService: 'MedReqService',
-                    med_reqs: function(MedReqService) {
-                        return MedReqService.GetMyMedReqs().then(function(res) {
-                            return res.data.medical_reqs;
+                    UserService: 'UserService',
+                    med_staff: function(UserService) {
+                        return UserService.GetByRole('Medic').then(function(res) {
+                            return res.data.data.users;
+                        }, function(error) {
+                            return error;
+                        });
+                    },
+                    players: function(UserService) {
+                        return UserService.GetByRole('Player').then(function(res) {
+                            return res.data.data.users;
                         }, function(error) {
                             return error;
                         });
                     }
                 }
-            }).
-            state('home.med_rep', {
-                url: '.med_rep',
-                templateUrl: '/views/med_rep.html',
-                controller: 'MedRepsCtrl',
-                require_login: true,
-                good_roles: ["Medic"]
-            }).
-            state('home.trades', {
-                url: '.trades',
-                templateUrl: '/views/trades.html',
-                controller: 'TradesCtrl',
-                require_login: true,
-                good_roles: ["Admin", "Coach"]
             });
     }
 ]);

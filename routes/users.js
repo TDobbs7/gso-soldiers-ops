@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
 
-    user_coll.find({}).toArray(function(err, users) {
+    user_coll.find({}).sort({'lname' : 1}).toArray(function(err, users) {
     	if (err) res.status(500).json({"message": "Error getting users\n" + err});
 		else res.json({"message": "success", "data": {"users": users}});
     });
@@ -29,7 +29,7 @@ router.get('/role/:role', function(req, res, next) {
     var user_coll = db.collection('users');
     var role = req.params.role;
 
-    user_coll.find({'role.class': role}).toArray(function(err, users) {
+    user_coll.find({'role.class': role}).sort({'lname' : 1}).toArray(function(err, users) {
         if (err) res.status(500).json({"message": "Error finding users (" + role + ")\n" + err});
         else if (!users) res.status(404).json({"message": "Users ("  + role + ") not found"});
         else res.json({"message": "success", "data" : {"users": users}});
@@ -67,16 +67,15 @@ router.post('/login', function(req, res, next) {
     	else {
     		delete user.password;
 
-            var abs_coll = db.collection('abilities');
+            // var abs_coll = db.collection('abilities');
 
-            abs_coll.findOne({'class': user.role.class}, {}, function(err, powers) {
-                var timestamp = new Date(new Date().getTime()).toLocaleString();
+            // abs_coll.findOne({'class': user.role.class}, {}, function(err, powers) {
+            var timestamp = new Date(new Date().getTime()).toLocaleString();
 
-                if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});
-                else if (!powers) res.json({"message": "success", "data": {"user": user, "timestamp" : timestamp}});
+            //     if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});
+            //     else if (!powers) res.json({"message": "success", "data": {"user": user, "timestamp" : timestamp}});
                 
-                res.json({"message": "success", "data": {"user" : user, "abilities": powers.abilities, "timestamp" : timestamp}});
-            });
+            res.json({"message": "success", "data": {"user" : user, "timestamp" : timestamp}});
     	}
     });
 });
