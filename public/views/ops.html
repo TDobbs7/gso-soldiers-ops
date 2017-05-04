@@ -7,7 +7,10 @@
 		<h3><small>First Name</small></h3><input type="text" ng-model="fname" size"150">
 		<h3><small>Last Name</small></h3><input type="text" ng-model="lname" size"150">
 		<h3><small>Email</small></h3><input type="text" ng-model="email" size"150">
-		<h3><small>Class</small></h3><input type="text" ng-model="class" size"150">
+		<h3><small>Ability</small></h3>
+		<select ng-model="ability">
+			<option ng-repeat="ability in abilities" value="{{ability}}">ability</option>
+		</select>
 		<h3><small>Position</small></h3><input type="text" ng-model="position" size"150">
 
 		<select ng-model="player">
