@@ -31,7 +31,6 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
 
             $rootScope.changeState('login');
             alert("You have logged out");
-            //$state.reload();
         }, function(res) {
           $rootScope.stopAndReport(res.data);
         });
@@ -75,8 +74,5 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
     
     $rootScope.changeState(s);
     
-    if (window.sessionStorage.getItem("user") != null && window.sessionStorage.getItem("abiltiies") != null) {
-        $rootScope.currentUserData = JSON.parse(window.sessionStorage.getItem("user"));
-        $rootScope.currentUserData.abilities = JSON.parse(window.sessionStorage.getItem("abilities"));
-    }
+    if (window.sessionStorage.getItem("user") != null ) $rootScope.currentUserData = JSON.parse(window.sessionStorage.getItem("user"));
 });

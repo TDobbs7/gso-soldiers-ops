@@ -15,6 +15,7 @@ var users = require('./routes/users');
 var init = require('./routes/init');
 var ops = require('./routes/ops');
 var med_reqs = require('./routes/med_reqs');
+var abilities = require('./routes/abilities');
 var plays = require('./routes/plays');
 
 var app = express();
@@ -64,6 +65,7 @@ app.use('/users', users);
 app.use('/init', init);
 app.use('/ops', ops);
 app.use('/med_reqs', med_reqs);
+app.use('/abilities', abilities);
 app.use('/playbook', plays);
 
 // catch 404 and forward to error handler

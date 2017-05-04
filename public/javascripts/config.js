@@ -22,7 +22,17 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/views/home.html',
                 controller: 'UserCtrl',
                 require_login: true,
-                good_roles: ["all"]
+                good_roles: ["all"],
+                resolve: {
+                    AbsService: "AbsService",
+                    abilities: function(AbsService) {
+                        return AbsService.GetMyAbs().then(function(res) {
+                            return res.data.data.abilities;
+                        }, function(error) {
+                            return error;
+                        });
+                    }
+                }
             }).
             state('home.ops', {
                 url: '.ops',

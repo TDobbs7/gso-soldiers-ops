@@ -36,9 +36,10 @@ controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$location', 'UserServ
         }
     }
 ]).
-controller('UserCtrl', ['$rootScope','$scope',
-    function($rootScope, $scope) {
+controller('UserCtrl', ['$rootScope','$scope', 'abilities',
+    function($rootScope, $scope, abilities) {
         $scope.user = $rootScope.currentUserData;
+        $scope.user.abilities = abilities.abilities;
 
         function getUserEmail() {
             return $scope.user.email;
@@ -86,15 +87,16 @@ controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', '
         $scope.med_staff = med_staff;
         $scope.players = players;
 
-        $scope.makeRequest = function() {
-            return MedReqService.AddNewMedReq(/*medical req*/).then(success, failed);
-        }
-        $scope.postReq = function(staff, request) {
-            var credentials = {
-                'staff' : staff,
-                'player' : $rootScope.currentUserData.email,
-                'request' : request
-            };
+        $scope.postReq = function(player, staff, request) {
+            var credentials = {};
+
+            credentials.request = request;
+
+            if (typeof player !== 'undefined' && player !== null) credentials.player = player;
+            else credentials.player = $rootScope.currentUserData.email;
+
+            credentials.staff = staff;
+
             return MedReqService.AddNewMedReq(credentials).then(success,failed);
           }
           function success(res) {

@@ -67,16 +67,15 @@ router.post('/login', function(req, res, next) {
     	else {
     		delete user.password;
 
-            var abs_coll = db.collection('abilities');
+            // var abs_coll = db.collection('abilities');
 
-            abs_coll.findOne({'class': user.role.class}, {}, function(err, powers) {
-                var timestamp = new Date(new Date().getTime()).toLocaleString();
+            // abs_coll.findOne({'class': user.role.class}, {}, function(err, powers) {
+            var timestamp = new Date(new Date().getTime()).toLocaleString();
 
-                if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});
-                else if (!powers) res.json({"message": "success", "data": {"user": user, "timestamp" : timestamp}});
+            //     if (err) res.status(500).json({"message": "Error getting user's abilities\n" + err});
+            //     else if (!powers) res.json({"message": "success", "data": {"user": user, "timestamp" : timestamp}});
                 
-                res.json({"message": "success", "data": {"user" : user, "abilities": powers.abilities, "timestamp" : timestamp}});
-            });
+            res.json({"message": "success", "data": {"user" : user, "timestamp" : timestamp}});
     	}
     });
 });
