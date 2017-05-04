@@ -80,8 +80,8 @@ controller('ContractsCtrl', ['$scope',
 
     }
 ]).
-controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs', 'med_staff', 'players',
-    function($scope, MedReqService, med_reqs, med_staff, players) {
+controller('MedReqsCtrl', ['$scope','$rootScope','$location', 'MedReqService', 'med_reqs', 'med_staff', 'players',
+    function($rootScope, $scope, $location, MedReqService, med_reqs, med_staff, players) {
         $scope.med_reqs = med_reqs;
         $scope.med_staff = med_staff;
         $scope.players = players;
@@ -89,12 +89,20 @@ controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs', 'med_staff', '
         $scope.makeRequest = function() {
             return MedReqService.AddNewMedReq(/*medical req*/).then(success, failed);
         }
-
-        function success(res) {
-            AuthenticationService.setCurrentUser(res.data);
-            $rootScope.changeState('home');
-            $location.path('/home');
-        }
+        $scope.postReq = function(staff, request) {
+            var credentials = {
+                'staff' : staff,
+                'player' : $rootScope.currentUserData.email,
+                'request' : request
+            };
+            return MedReqService.AddNewMedReq(credentials).then(success,failed);
+          }
+          function success(res) {
+              //AuthenticationService.setCurrentUser(res.data);
+              alert("Your request has been posted!");
+              $rootScope.changeState('home');
+              $location.path('/home');
+          }
 
         function failed(res) {
             $rootScope.stopAndReport(res.data);
@@ -103,6 +111,6 @@ controller('MedReqsCtrl', ['$scope', 'MedReqService', 'med_reqs', 'med_staff', '
 ]).
 controller('MedRepsCtrl', ['$scope',
     function($scope) {
-        
+
     }
 ]);
