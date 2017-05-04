@@ -1,7 +1,7 @@
 <div class="container">
 	<p>Operations would go here</p>
 </div>
-<form ng-submit="addNewUser(fname, lname, email, password, position )">
+<form ng-submit="addNewUser(fname, lname, email, password, position, duration, amount )">
 	<div>
 		<h3><small>Add a new user:</small></h3>
 		<h3><small>First Name</small></h3><input type="text" ng-model="fname" size"150">
@@ -13,6 +13,9 @@
 			<option ng-repeat="class in classes" value="{{class}}">class</option>
 		</select>
 		<h3><small>Position</small></h3><input type="text" ng-model="position" size"150">
+		<h3><small>Duration</small></h3><input type="text" ng-model="duration" size"150">
+		<h3><small>Amount</small></h3><input type="text" ng-model="amount" size"150">
+
 	</div>
 
 		<br><br>
