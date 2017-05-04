@@ -56,9 +56,23 @@ controller('Train_SchedCtrl', ['$scope',
 
     }
 ]).
-controller('Med_SchedCtrl', ['$scope', 'MedReqService', 'med_reqs',
-    function($scope, MedReqService, med_reqs) {
+controller('Med_SchedCtrl', ['$rootScope','$location','$scope', 'MedReqService', 'med_reqs',
+    function($rootScope, $location, $scope, MedReqService, med_reqs) {
         $scope.med_reqs = med_reqs;
+        $scope.removeIssue = function(id){
+          return MedReqService.DeleteMedReq(id).then(success,failed);
+          //alert(request);
+        }
+        function success(res) {
+            //AuthenticationService.setCurrentUser(res.data);
+            alert("The request has been resolved!");
+            $rootScope.changeState('home');
+            $location.path('/home');
+        }
+
+      function failed(res) {
+          $rootScope.stopAndReport(res.data);
+      }
     }
 ]).
 controller('OpsCtrl', ['$scope',
