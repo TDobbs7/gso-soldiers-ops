@@ -75,9 +75,27 @@ controller('Med_SchedCtrl', ['$rootScope','$location','$scope', 'MedReqService',
       }
     }
 ]).
-controller('OpsCtrl', ['$scope', 'roles',
-    function($scope, roles) {
+controller('OpsCtrl', ['$scope', '$rootScope', 'roles', 'UserService', 'ContractsService',
+    function($scope, $rootScope, roles, UserService, ContractsService) {
         $scope.roles = roles;
+
+        $scope.addNewUser = function(new_user, contract) {
+            contract.email = new_user.email;
+
+            return UserService.AddNewUser(new_user, contract).then(success, failed);
+
+        }
+
+        function success(res) {
+            //AuthenticationService.setCurrentUser(res.data);
+            alert("The user has been added!");
+            $rootScope.changeState('home');
+            $location.path('/home');
+        }
+
+      function failed(res) {
+          $rootScope.stopAndReport(res.data);
+      }
     }
 ]).
 controller('PlaysCtrl', ['$scope',

@@ -1,5 +1,5 @@
 <div class="container">
-	<form ng-submit="addNewUser(new_user)">
+	<form ng-submit="addNewUser(new_user, contract)">
 		<div>
 			<h3><small>Add a new user:</small></h3>
 			<h3><small>First Name</small></h3><input type="text" ng-model="new_user.fname" size"150">
@@ -12,6 +12,7 @@
 			</select>
 			<h3><small>Position</small></h3><input type="text" ng-model="new_user.role.position" size"150">
 		<h3><small>Duration</small></h3><input type="text" ng-model="contract.duration" size"150">
-		<h3><small>Amount</small></h3><input type="text" ng-model="contract.amount" size"150">
+		<h3><small>Amount</small></h3><input type="text" ng-model="contract.amount" size"150"><br><br>
+		<input type="submit">
 		</div>
 </div>

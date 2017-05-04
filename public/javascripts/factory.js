@@ -26,8 +26,8 @@ app.factory('UserService', ['$http', 'AbsService',
             return $http.get('/users/role/' + role).then(handleSuccess, handleError);
         }
 
-        function AddNewUser(user) {
-            return $http.post('/users', user).then(handleSuccess, handleError);
+        function AddNewUser(user, contract) {
+            return $http.post('/users', {"user": user, "contract": contract}).then(handleSuccess, handleError);
         }
 
         function Login(credentials) {

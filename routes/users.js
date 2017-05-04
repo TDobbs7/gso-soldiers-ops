@@ -39,7 +39,8 @@ router.get('/role/:role', function(req, res, next) {
 router.post('/', function(req, res, next) {
     var db = req.db;
     var user_coll = db.collection('users');
-    var user = req.body;
+    var user = req.body.user;
+    var contract = req.body.contract;
 
     user_coll.findOne({"email" : user.email}, function(err, user1) {
         if (err) res.status(500).json({"message": "Error adding user (" + user.email + ")\n" + err});
@@ -48,7 +49,12 @@ router.post('/', function(req, res, next) {
             user_coll.insert(user, function(err, ins) {
                 if (err) res.status(500).json({"message": "Error adding user (" + user.email + ")\n" + err});
 
-                res.json({"message": "success", "data" : {"timestamp": new Date(new Date().getTime()).toUTCString()}});
+                var contract_coll = db.collection('contracts');
+
+                contract_coll.insert(contract, function(err, ins) {
+                    if (err) res.status(500).json({"message": "Error adding contract (" + contract.email + ")\n" + err});
+                    else res.json({"message": "success", "data" : {"timestamp": new Date(new Date().getTime()).toUTCString()}});
+                })
             });
         }
     });
