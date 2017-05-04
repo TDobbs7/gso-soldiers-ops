@@ -1,3 +1,24 @@
 <div class="container">
-	<p>Operations would go here</p>	
+	<p>Operations would go here</p>{{user}}
 </div>
+<form ng-submit="postReq(player, staff, issue)">
+	<div>
+		<h3><small>Add a new user:</small></h3>
+		<h3><small>First Name</small></h3><input type="text" ng-model="fname" size"150">
+		<h3><small>Last Name</small></h3><input type="text" ng-model="lname" size"150">
+		<h3><small>Email</small></h3><input type="text" ng-model="email" size"150">
+		<h3><small>Ability</small></h3>
+		<select ng-model="ability">
+			<option ng-repeat="ability in abilities" value="{{ability}}">ability</option>
+		</select>
+		<h3><small>Position</small></h3><input type="text" ng-model="position" size"150">
+
+		<select ng-model="player">
+			<option ng-repeat="player in players" value="{{player.email}}">{{player.lname}}, {{player.fname}}: {{player.role.position}} ({{player.email}})</option>
+		</select>
+	</div>
+
+		<br><br>
+
+		<input class="btn btn-primary" type="submit">
+</form>
