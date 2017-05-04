@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/email/:email', function(req, res, next) {
+router.get('/:email', function(req, res, next) {
     var db = req.db;
     var contracts_coll = db.collection('contracts');
     var email = req.params.email;
@@ -20,18 +20,6 @@ router.get('/email/:email', function(req, res, next) {
         if (err) res.status(500).json({"message": "Error finding contract (" + email + ")\n" + err});
         else if (!contract) res.status(404).json({"message": "Contract ("  + email + ") not found"});
         else res.json({"message": "success", "data" : {"contracts": contract}});
-    });
-});
-
-router.get('/role/:role', function(req, res, next) {
-    var db = req.db;
-    var contract_coll = db.collection('contracts');
-    var role = req.params.role;
-
-    contract_coll.find({'role.class': role}).toArray(function(err, contracts) {
-        if (err) res.status(500).json({"message": "Error finding contracts (" + role + ")\n" + err});
-        else if (!contracts) res.status(404).json({"message": "contracts ("  + role + ") not found"});
-        else res.json({"message": "success", "data" : {"contracts": contracts}});
     });
 });
 

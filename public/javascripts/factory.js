@@ -248,7 +248,7 @@ factory('ContractsService', ['$http', '$rootScope',
         var service = {};
 
         service.GetAllContracts = GetAllContracts;
-        service.GetMyContract = GetMyContract;
+        service.GetMyContracts = GetMyContracts;
         service.AddNewContract = AddNewContract;
         service.UpdateContract = UpdateContract;
         service.DeleteContract = DeleteContract;

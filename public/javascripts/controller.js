@@ -90,8 +90,8 @@ controller('TradesCtrl', ['$scope',
 
     }
 ]).
-controller('ContractsCtrl', ['$scope', 'contracts',
-    function($scope, contracts) {
+controller('ContractsCtrl', ['$scope', 'ContractsService', 'contracts',
+    function($scope, ContractsService, contracts) {
         $scope.contracts = contracts;
     }
 ]).
