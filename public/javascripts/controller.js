@@ -75,8 +75,8 @@ controller('Med_SchedCtrl', ['$rootScope','$location','$scope', 'MedReqService',
       }
     }
 ]).
-controller('OpsCtrl', ['$scope',
-    function($scope) {
+controller('OpsCtrl', ['$scope','$rootScope','$location',
+    function( $scope, $rootScope, $location) {
 
     }
 ]).
