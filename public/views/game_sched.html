@@ -1,5 +1,55 @@
-<script src="/public/javascripts/mlabs.js"></script>
+<html>
+	<head>
+	</head>
+	<body>
+		<div class="container" data-ng-if="currentUserData.role.class === 'Admin'">
 
-<div class="container" data-ng-if="currentUserData.role.class === 'Admin'">
-	<img src="/docs/game_sched.png">
-</div>
+			<style type="text/css">
+	table.tableizer-table {
+		font-size: 18px;
+		border: 1px solid #CCC;
+		font-family: Arial, Helvetica, sans-serif;
+	}
+	.tableizer-table td {
+		padding: 4px;
+		margin: 3px;
+		border: 1px solid #CCC;
+	}
+	.tableizer-table th {
+		background-color: #2E790D;
+		color: #FFF;
+		font-weight: bold;
+	}
+</style>
+<table class="tableizer-table">
+<thead><tr class="tableizer-firstrow"><th>Greensboro Soliders Schedule</th><th>&nbsp;</th><th>&nbsp;</th><th>&nbsp;</th></tr></thead><tbody>
+ <tr><td>Date</td><td>Time</td><td>Location</td><td>Opponent</td></tr>
+ <tr><td>3-Jun</td><td>7:00pm</td><td>Winston-Salem, NC</td><td>WildCats</td></tr>
+ <tr><td>10-Jun</td><td>7:00pm</td><td>Raleigh, NC</td><td>Raptors</td></tr>
+ <tr><td>17-Jun</td><td>7:00pm</td><td>Fayetteville, NC</td><td>Flight</td></tr>
+ <tr><td>24-Jun</td><td>7:00pm</td><td>Greensboro, NC</td><td>Rockets</td></tr>
+ <tr><td>1-Jul</td><td>7:00pm</td><td>Columbia, SC</td><td>Cavaliers</td></tr>
+ <tr><td>8-Jul</td><td>7:00pm</td><td>Greensboro, NC</td><td>Bulls</td></tr>
+ <tr><td>15-Jul</td><td>7:00pm</td><td>Richmond, VA</td><td>Rockets</td></tr>
+ <tr><td>22-Jul</td><td>7:00pm</td><td>Greensboro, NC</td><td>Cavaliers</td></tr>
+ <tr><td>29-Jul</td><td>7:00pm</td><td>Atlanta, GA</td><td>Warriors</td></tr>
+ <tr><td>5-Aug</td><td>7:00pm</td><td>Winston-Salem, NC</td><td>WildCats</td></tr>
+ <tr><td>12-Aug</td><td>7:00pm</td><td>Greensboro, NC</td><td>Flight</td></tr>
+ <tr><td>19-Aug</td><td>7:00pm</td><td>Raleigh, NC</td><td>Raptors</td></tr>
+ <tr><td>26-Aug</td><td>7:00pm</td><td>Greensboro, NC</td><td>Warriors</td></tr>
+ <tr><td>2-Sep</td><td>TBA</td><td>TBA</td><td>Playoffs</td></tr>
+ <tr><td>9-Sep</td><td>TBA</td><td>TBA</td><td>Playoffs</td></tr>
+ <tr><td>16-Sep</td><td>TBA</td><td>TBA</td><td>Playoffs</td></tr>
+ <tr><td>23-Sep</td><td>5:00pm</td><td>Atlanta, GA</td><td>Championship</td></tr>
+</tbody></table>
+
+
+
+
+
+
+
+		</div>
+	</body>
+</html>
+<!-- <img src=" public/docs/game_sched.png"> -->

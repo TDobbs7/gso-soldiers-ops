@@ -30,14 +30,12 @@ app.run(function($location, $rootScope, $state, AuthenticationService, UserServi
             });*/
 
             $rootScope.changeState('login');
-            $state.go('login');
-
             alert("You have logged out");
             //$state.reload();
         }, function(res) {
           $rootScope.stopAndReport(res.data);
         });
-    };
+    }
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
         if($location.path() !== "") {
